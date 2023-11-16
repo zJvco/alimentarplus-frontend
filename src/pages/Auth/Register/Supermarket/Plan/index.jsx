@@ -9,8 +9,11 @@ import { BackgroundColor, Container, Title, Subtitle, Footer, FooterContent, For
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
+import UseRedirect from '../../../../../hooks/useRedirect'
 
 function Plan() {
+    UseRedirect()
+
     const navigate = useNavigate()
 
     const handlePlanClick = (type) => {

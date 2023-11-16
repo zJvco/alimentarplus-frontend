@@ -10,10 +10,13 @@ import { useMutation } from 'react-query'
 import { notify } from '../../../../../utils/notify'
 import api from '../../../../../api/config'
 import { getFormatedRegisterDataJSONResponse } from '../../../../../utils/helpers'
+import UseRedirect from '../../../../../hooks/useRedirect'
 
 const mockedTitleData = ["Dados do Responsável", "Dados da ONG", "Endereço da ONG"]
 
 function Confirm() {
+  UseRedirect()
+  
   const navigate = useNavigate()
 
   const handleEditButton = () => {

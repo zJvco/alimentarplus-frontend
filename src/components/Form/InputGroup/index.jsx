@@ -1,22 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function InputGroup({ children, verticalAlignment, margin }) {
+function InputGroup({ children, verticalAlignment, margin, title }) {
     return (
-        <>
+        <MainContainer style={{ margin: margin }}>
+            { title && <Title>{title}</Title>}
+
             {verticalAlignment ? (
-                <ContainerVertical style={{ margin: margin }}>
+                <ContainerVertical>
                     {children}
                 </ContainerVertical>
             ) : (
-                <ContainerHorizontal style={{ margin: margin }}>
+                <ContainerHorizontal>
                     {children}
                 </ContainerHorizontal>
             )
             }
-        </>
+        </MainContainer>
     )
 }
+
+const MainContainer = styled.div`
+`
 
 const ContainerVertical = styled.div`
     display: flex;
@@ -26,6 +31,10 @@ const ContainerVertical = styled.div`
 const ContainerHorizontal = styled.div`
     display: flex;
     flex-direction: row;
+`
+
+const Title = styled.span`
+    margin-bottom: 5px;
 `
 
 export default InputGroup

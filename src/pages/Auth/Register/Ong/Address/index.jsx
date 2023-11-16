@@ -7,8 +7,11 @@ import { BackgroundColor, Container, Title, ProgressBar, Subtitle, FormContainer
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
+import UseRedirect from '../../../../../hooks/useRedirect'
 
 function Address() {
+    UseRedirect()
+    
     const navigate = useNavigate()
 
     const [data, setData] = useState({})

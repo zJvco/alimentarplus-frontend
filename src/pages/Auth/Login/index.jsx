@@ -3,14 +3,22 @@ import { Link } from "react-router-dom"
 import InputField from "../../../components/Form/InputField"
 import Button from "../../../components/Form/Button"
 import Banner from "../../../assets/kid eating.png"
-import { useState } from "react"
-import { useMutation } from "react-query"
+import RadioField from "../../../components/Form/RadioField"
+import InputGroup from "../../../components/Form/InputGroup"
+import { useEffect, useState } from "react"
 import { notify } from "../../../utils/notify"
 import useAuth from "../../../hooks/useAuth"
+import { useNavigate } from "react-router-dom"
+import UseRedirect from "../../../hooks/useRedirect"
 
 function Login() {
+    UseRedirect()
+
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [radioType, setRadioType] = useState(null)
 
     const { login } = useAuth()
 
@@ -18,6 +26,13 @@ function Login() {
         e.preventDefault()
 
         login({ "email": email, "password": password })
+
+        if (radioType == "supermarket") {
+            navigate("/estabelecimento")
+        }
+        else if (radioType == "ong") {
+            navigate("/ong")
+        }
     }
 
     return (
@@ -29,6 +44,24 @@ function Login() {
                     <InputField type="text" label="E-mail" onChange={(e) => setEmail(e.target.value)} />
                     <InputField type="password" label="Senha" onChange={(e) => setPassword(e.target.value)} />
                     <ForgotPasswordText>Esqueceu sua senha? <Link to={"/esqueci-a-senha"}>Clique aqui.</Link></ForgotPasswordText>
+                    <InputGroup
+                        margin="12px 0 0 0"
+                    >
+                        <RadioField
+                            name="radio"
+                            value="supermercado"
+                            label="Supermercado"
+                            id="radio-supermercado"
+                            onChange={() => setRadioType("supermarket")}
+                        />
+                        <RadioField
+                            name="radio"
+                            value="ong"
+                            label="ONG"
+                            id="radio-ong"
+                            onChange={() => setRadioType("ong")}
+                        />
+                    </InputGroup>
                     <Button type="submit">Entrar</Button>
                     <DontHaveAccountYetText>Ainda não tem conta? <Link to={"/cadastro"}>Cadastre-se já.</Link></DontHaveAccountYetText>
                 </FormContainer>
@@ -69,11 +102,6 @@ const Title = styled.h1`
     margin: 20px 0;
 `
 
-const InputGroup = styled.div`
-    display: flex;
-    flex-direction: column;
-`
-
 const Footer = styled.footer`
     text-align: center;
 `
@@ -102,6 +130,10 @@ const ImageRight = styled.img`
         height: 100%;
         background-color: rgba(0, 0, 0, 0.2);
     } */
+`
+
+const ChooseOrganizationType = styled.span`
+
 `
 
 export default Login

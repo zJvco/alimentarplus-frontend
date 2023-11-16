@@ -1,9 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
+import style from './styles'
+import useAuth from '../../hooks/useAuth'
+import ProfileSquare from '../../components/ProfileSquare'
 
 function Header() {
+  const { userType } = useAuth()
+
   return (
-    <div>Header</div>
+    <style.Header>
+      <style.UserTypeDisplay>{ userType ? "Portal do Supermercado" : "Portal da ONG" }</style.UserTypeDisplay>
+
+      <ProfileSquare />
+    </style.Header>
   )
 }
 

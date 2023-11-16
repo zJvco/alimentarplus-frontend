@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import InputField from '../../../components/Form/InputField'
 import RadioField from '../../../components/Form/RadioField'
@@ -8,8 +8,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BackgroundColor, Container, Title, Subtitle, Footer, FooterContent, FormContainer, Logo, Header  } from './styles'
 import { useState } from 'react'
 import { setLocalStorageData } from '../../../utils/helpers'
+import UseRedirect from '../../../hooks/useRedirect'
 
 function Register() {
+  UseRedirect()
+
   const navigate = useNavigate()
 
   const [isOng, setIsOng] = useState(false)

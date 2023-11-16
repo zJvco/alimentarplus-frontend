@@ -10,10 +10,13 @@ import { useEffect } from 'react'
 import api from '../../../../../api/config'
 import { notify } from '../../../../../utils/notify'
 import { useNavigate } from 'react-router-dom'
+import UseRedirect from '../../../../../hooks/useRedirect'
 
 const mockedTitleData = ["Dados do Responsável", "Dados do Estabelecimento", "Endereço do Estabelecimento", "Plano Selecionado"]
 
 function Confirm() {
+  UseRedirect()
+  
   const navigate = useNavigate()
 
   const handleEditButton = () => {
