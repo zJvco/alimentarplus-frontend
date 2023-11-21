@@ -12,7 +12,9 @@ function MainLayout() {
       <RightContainer>
         <Header />
 
-        <Outlet />
+        <ContentContainer>
+          <Outlet />
+        </ContentContainer>
       </RightContainer>
     </MainContainer>
   )
@@ -26,6 +28,10 @@ const RightContainer = styled.div`
     margin-left: 120px;
     width: 100%;
 
+`
+
+const ContentContainer = styled.div`
+  padding: 20px;
 `
 
 export default MainLayout

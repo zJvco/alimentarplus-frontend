@@ -1,7 +1,7 @@
 import React from 'react'
 import useAuth from '../../hooks/useAuth'
 import { Navigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 
 export function PrivateRoute({ children }) {
     const { isAuthenticated } = useAuth()
@@ -20,7 +20,7 @@ export function PrivateRouteSupermarket({ children }) {
 
     return (
         (isAuthenticated && userType === "supermarket") ? (
-            children
+            <Outlet />
         ) : (
             <Navigate to="/login" />
         )
@@ -32,7 +32,7 @@ export function PrivateRouteOng({ children }) {
 
     return (
         (isAuthenticated && userType === "ong") ? (
-            children
+            <Outlet />
         ) : (
             <Navigate to="/login" />
         )

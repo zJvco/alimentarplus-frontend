@@ -13,6 +13,7 @@ const Container = styled.nav`
     background-color: #FCFCFC;
     border-right: 1px solid ${props => props.theme.colors.borderColor};
     transition: all ${transitionTime}s ease-in-out;
+    z-index: 1000;
 
     &.open {
         width: 200px;

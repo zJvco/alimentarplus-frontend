@@ -54,6 +54,7 @@ const Container = styled.div`
     border: 1px solid #CCCCCC;
     text-align: left;
     background-color: #FFFFFF;
+    z-index: 1000;
 `
 
 const LinkList = styled.ul`

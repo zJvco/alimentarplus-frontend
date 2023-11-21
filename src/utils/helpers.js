@@ -28,3 +28,17 @@ export const getFormatedRegisterDataJSONResponse = (type) => {
         })
     }
 }
+
+export const filterAvailableValuesByList = (availableValues, data) => {
+    return data.map(object => {
+        const newObject = {}
+
+        availableValues.forEach(key => {
+            if (object[key] !== undefined) {
+                newObject[key] = object[key]
+            }
+        })
+
+        return newObject
+    })
+}

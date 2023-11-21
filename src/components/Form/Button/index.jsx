@@ -6,9 +6,10 @@ function Button({
   onClick,
   margin,
   type,
+  style
 }) {
   return (
-    <ButtonInput type={type} onClick={onClick} style={{ margin: margin }}>
+    <ButtonInput type={type} onClick={onClick} style={{ margin: margin, ...style }}>
       { children }
     </ButtonInput>
   )
@@ -24,6 +25,9 @@ const ButtonInput = styled.button`
     cursor: pointer;
     color: #FFFFFF;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       background-color: ${props => props.theme.colors.secondary};

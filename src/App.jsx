@@ -29,10 +29,10 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
     }
 
   body {
-      font-family: 'Nunito', sans-serif;
       font-size: .9rem;
   }
 
@@ -48,10 +48,6 @@ const GlobalStyle = createGlobalStyle`
 
   .footer-text {
     font-size: 0.8rem;
-  }
-
-  button {
-    font-family: unset;
   }
 `
 
@@ -91,14 +87,14 @@ function App() {
                   element={<PrivateRouteSupermarket />}
                 >
                   <Route index element={<SMHome />} />
-                  <Route path='/estabelecimento/produtos' element={<SMProducts/>} />
+                  <Route path='produtos' element={<SMProducts/>} />
                 </Route>
 
                 <Route
                   path='/ong'
-                  element={<PrivateRouteOng><ONGHome /></PrivateRouteOng>}
+                  element={<PrivateRouteOng />}
                 >
-
+                  <Route index element={<ONGHome />} />
                 </Route>
 
               </Route>
