@@ -7,7 +7,7 @@ function CloseButton({
     style
 }) {
   return (
-    <Button onClick={onClick} style={style}>
+    <Button type="button" onClick={onClick} style={style}>
         <FaXmark />
     </Button>
   )

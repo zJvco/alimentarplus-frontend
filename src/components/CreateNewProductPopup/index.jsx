@@ -5,6 +5,7 @@ import InputField from '../Form/InputField'
 import InputGroup from '../Form/InputGroup'
 import TextField from '../Form/TextField'
 import Button from '../Form/Button'
+import AttachField from '../Form/AttachField'
 
 function CreateNewProductPopup({
   isOpen,
@@ -39,6 +40,11 @@ function CreateNewProductPopup({
           </InputGroup>
 
           <TextField label="Descrição" placeholder="Insira uma descrição para o seu produto" rows="10" />
+
+          <InputGroup>
+            <AttachField label="Imagem do produto" multipleFiles={true} />
+            <AttachField label="Imagem da validade do produto" marginLeft="10px" />
+          </InputGroup>
 
           <style.ActionsContainer>
             <style.CancelButton onClick={handleClosePopup}>Cancelar</style.CancelButton>

@@ -19,6 +19,7 @@ const Container = styled.div`
     height: 100vh;
     background-color: #FFFFFF;
     padding: 30px;
+    overflow-y: auto;
 `
 
 const Header = styled.div`
