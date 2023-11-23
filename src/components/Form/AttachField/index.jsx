@@ -9,10 +9,10 @@ function AttachField({
     id,
     label,
     multipleFiles=false,
-    marginLeft
+    marginLeft,
+    files=[],
+    setFiles
 }) {
-    const [files, setFiles] = useState([])
-
     const handleAddedFile = (e) => {
         const { files: inputFiles } = e.target
 
@@ -24,10 +24,6 @@ function AttachField({
     const handleRemoveFile = (fileName) => {
         setFiles(files.filter(file => file.name !== fileName))
     }
-
-    useEffect(() => {
-        console.log(files)
-    }, [files])
 
     return (
         <Container style={{ marginLeft: marginLeft }}>
