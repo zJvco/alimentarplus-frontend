@@ -9,6 +9,7 @@ import CircularLoader from '../../../components/CircularLoader'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import CreateNewProductPopup from '../../../components/CreateNewProductPopup'
+import { useNavigate } from 'react-router-dom'
 
 const AVAILABLE_TABLE_VALUES = ["id", "name", "brand", "quantity_units", "is_active", "expiration_date"]
 
@@ -22,8 +23,10 @@ const muiTableColumns = [
 ]
 
 function Products() {
+  const navigate = useNavigate()
+  
   const [isOpenCreateNewProdutoPopup, setIsOpenCreateNewProdutoPopup] = useState(false)
-
+  
   const { user, token } = useAuth()
 
   const getProducts = async () => {
@@ -43,10 +46,6 @@ function Products() {
       return filterAvailableValuesByList(AVAILABLE_TABLE_VALUES, data)
     }
   })
-
-  const test = (e) => {
-    console.log(e)
-  }
 
   if (isLoading) {
     return <CircularLoader />
@@ -72,7 +71,7 @@ function Products() {
         slotProps={{
           toolbar: { isOpenCreateNewProdutoPopup: isOpenCreateNewProdutoPopup, setIsOpenCreateNewProdutoPopup: setIsOpenCreateNewProdutoPopup  }
         }}
-        onRowDoubleClick={test}
+        onRowDoubleClick={(rowData) => navigate("/estabelecimento/produtos/" + rowData.id)}
         disableRowSelectionOnClick
         localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
         autoHeight

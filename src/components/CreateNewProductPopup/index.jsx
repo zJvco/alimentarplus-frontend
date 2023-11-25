@@ -6,7 +6,7 @@ import InputGroup from '../Form/InputGroup'
 import TextField from '../Form/TextField'
 import Button from '../Form/Button'
 import AttachField from '../Form/AttachField'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useState } from 'react'
 import api from '../../api/config'
 import useAuth from '../../hooks/useAuth'
@@ -17,7 +17,10 @@ function CreateNewProductPopup({
   isOpen,
   setIsOpen
 }) {
+  const queryClient = useQueryClient()
+
   const { user, token } = useAuth()
+  
   const [formData, setFormData] = useState({})
   const [formProductImageFile, setFormProductImageFile] = useState([])
   const [formProductExpirationDateImageFile, setFormProductExpirationDateImageFile] = useState([])
@@ -35,7 +38,8 @@ function CreateNewProductPopup({
 
     const response = await api.post("/upload/", formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + token
       }
     })
 
@@ -57,6 +61,7 @@ function CreateNewProductPopup({
 
   const createProductMutation = useMutation(createProduct, {
     onSuccess: (data) => {
+      queryClient.invalidateQueries("products")
       notify("Produto cadastrado com sucesso!", "success")
       setIsOpen(!isOpen)
     },
@@ -101,7 +106,7 @@ function CreateNewProductPopup({
 
           <InputGroup>
             <InputField label="Peso total (kg)" type="number" placeholder="Insira o nome do seu produto" onChange={(e) => setFormData({...formData, "total_weight_grams": e.target.value})} />
-            <InputField label="Data de validade" type="datetime-local" marginLeft="10px" onChange={(e) => setFormData({...formData, "expiration_date": e.target.value})} />
+            <InputField label="Data de validade" type="date" marginLeft="10px" onChange={(e) => setFormData({...formData, "expiration_date": e.target.value})} />
           </InputGroup>
 
           <InputGroup>

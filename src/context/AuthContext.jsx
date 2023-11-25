@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         }
     })
 
-    if (loginMutation.isLoading) {
+    if (loginMutation.isLoading || isLoading) {
         return (
             <div style={{
                 width: "100%",
@@ -140,7 +140,7 @@ export const AuthProvider = ({ children }) => {
                 login: loginMutation.mutate,
                 logout: logoutMutation.mutate
             }}>
-                {!isLoading && children}
+                {children}
             </AuthContext.Provider>
         )
     }

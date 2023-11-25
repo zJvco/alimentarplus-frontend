@@ -20,6 +20,7 @@ import MainLayout from './Layout.jsx';
 // Supermercado
 import SMHome from './pages/SupermarketUI/Home';
 import SMProducts from './pages/SupermarketUI/Products/index.jsx';
+import SMProductView from './pages/SupermarketUI/ProductView/index.jsx';
 
 // Ong
 import ONGHome from './pages/OngUI/Home/index.jsx';
@@ -87,7 +88,11 @@ function App() {
                   element={<PrivateRouteSupermarket />}
                 >
                   <Route index element={<SMHome />} />
-                  <Route path='produtos' element={<SMProducts/>} />
+
+                  <Route path='produtos'>
+                    <Route index element={<SMProducts/>} />
+                    <Route path=':id' element={<SMProductView />} />
+                  </Route>
                 </Route>
 
                 <Route

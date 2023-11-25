@@ -10,7 +10,8 @@ function InputField({
   className,
   id,
   name,
-  marginLeft
+  marginLeft,
+  disable=false
 }) {
   return (
     <Container
@@ -26,6 +27,7 @@ function InputField({
         className={className}
         id={id}
         name={name}
+        disabled={disable}
       />
     </Container>
   )
@@ -38,6 +40,10 @@ const Input = styled.input`
   border-radius: 5px;
   margin: 10px 0;
   width: 100%;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `
 
 const Label = styled.label`
