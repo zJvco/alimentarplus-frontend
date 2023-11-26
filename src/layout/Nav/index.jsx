@@ -74,10 +74,10 @@ function Nav() {
             </style.LinkContainer>
 
             <style.LinkContainer>
-              <style.Link href='/ong/estabelecimentos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+              <style.Link href='/ong/produtos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaStore />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Estabelecimentos</style.LinkTitle>
+                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>

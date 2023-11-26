@@ -123,10 +123,6 @@ function ProductView() {
     setUpdatedFormData({...updatedFormData, "is_active": isSwitchActive})
   }, [isSwitchActive])
 
-  useEffect(() => {
-    console.log(updatedFormData)
-  }, [updatedFormData])
-
   if (isLoading) {
     return <CircularLoader />
   }
