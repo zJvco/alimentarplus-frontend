@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import style from './styles'
-import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck } from 'react-icons/fa6'
+import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore } from 'react-icons/fa6'
+import useAuth from '../../hooks/useAuth'
 
 function Nav() {
+  const { userType } = useAuth()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleOnMouseEnter = (e) => {
@@ -21,41 +24,83 @@ function Nav() {
     >
       <style.Logo>A+</style.Logo>
       <style.Links>
-        <style.LinkContainer>
-          <style.Link href='/estabelecimento' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-            <FaHouse />
-            <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-              <style.LinkTitle key="Home" className={isMenuOpen ? "show" : ""}>Home</style.LinkTitle>
-            </style.LinkTitleHelper>
-          </style.Link>
-        </style.LinkContainer>
+        { userType === "supermarket" ? (
+          <>
+            <style.LinkContainer>
+              <style.Link href='/estabelecimento' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaHouse />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Home" className={isMenuOpen ? "show" : ""}>Home</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
 
-        <style.LinkContainer>
-          <style.Link href='/estabelecimento/produtos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-            <FaBoxOpen />
-            <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-              <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
-            </style.LinkTitleHelper>
-          </style.Link>
-        </style.LinkContainer>
+            <style.LinkContainer>
+              <style.Link href='/estabelecimento/produtos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaBoxOpen />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
 
-        <style.LinkContainer>
-          <style.Link href='/estabelecimento/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-            <FaSquarePollVertical />
-            <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-              <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
-            </style.LinkTitleHelper>
-          </style.Link>
-        </style.LinkContainer>
+            <style.LinkContainer>
+              <style.Link href='/estabelecimento/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaSquarePollVertical />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
 
-        <style.LinkContainer>
-          <style.Link href='/estabelecimento/doacoes' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-            <FaClipboardCheck />
-            <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-              <style.LinkTitle key="Doações" className={isMenuOpen ? "show" : ""}>Doações</style.LinkTitle>
-            </style.LinkTitleHelper>
-          </style.Link>
-        </style.LinkContainer>
+            <style.LinkContainer>
+              <style.Link href='/estabelecimento/doacoes' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaClipboardCheck />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Doações" className={isMenuOpen ? "show" : ""}>Doações</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
+          </>
+        ) : (
+          <>
+            <style.LinkContainer>
+              <style.Link href='/ong' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaHouse />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Home" className={isMenuOpen ? "show" : ""}>Home</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
+
+            <style.LinkContainer>
+              <style.Link href='/ong/estabelecimentos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaStore />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Estabelecimentos</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
+
+            {/* <style.LinkContainer>
+              <style.Link href='/estabelecimento/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaSquarePollVertical />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer> */}
+
+            <style.LinkContainer>
+              <style.Link href='/ong/doacoes' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaClipboardCheck />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Doações" className={isMenuOpen ? "show" : ""}>Doações</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer>
+          </>
+        ) }
 
       </style.Links>
     </style.Container>

@@ -7,11 +7,13 @@ import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
 import CircularLoader from '../../../components/CircularLoader'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
     { field: "id_product", headerName: "ID do Produto", flex: 1 },
-    { field: "id_ong", headerName: "ID da ONG", flex: 1 },
+    { field: "id_supermarket", headerName: "ID do Supermercado", flex: 1 },
     { field: "situation", headerName: "Situação", flex: 1 },
 ]
 
@@ -21,7 +23,7 @@ function Donations() {
     // const [ongId, setOngId] = useState()
 
     const getAllDonations = async () => {
-        const response = await api.get(`supermarkets/${user.id_supermarket}/donations`, {
+        const response = await api.get(`/ongs/${user.id_ong}/donations`, {
             headers: {
                 "Authorization": "Bearer " + token 
             }

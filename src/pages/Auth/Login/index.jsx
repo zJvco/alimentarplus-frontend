@@ -18,7 +18,7 @@ function Login() {
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    const [radioType, setRadioType] = useState(null)
+    // const [radioType, setRadioType] = useState(null)
 
     const { login } = useAuth()
 
@@ -27,12 +27,12 @@ function Login() {
 
         login({ "email": email, "password": password })
 
-        if (radioType == "supermarket") {
-            navigate("/estabelecimento")
-        }
-        else if (radioType == "ong") {
-            navigate("/ong")
-        }
+        // if (radioType == "supermarket") {
+        //     navigate("/estabelecimento")
+        // }
+        // else if (radioType == "ong") {
+        //     navigate("/ong")
+        // }
     }
 
     return (
@@ -44,7 +44,7 @@ function Login() {
                     <InputField type="text" label="E-mail" onChange={(e) => setEmail(e.target.value)} />
                     <InputField type="password" label="Senha" onChange={(e) => setPassword(e.target.value)} />
                     <ForgotPasswordText>Esqueceu sua senha? <Link to={"/esqueci-a-senha"}>Clique aqui.</Link></ForgotPasswordText>
-                    <InputGroup
+                    {/* <InputGroup
                         margin="12px 0 0 0"
                     >
                         <RadioField
@@ -61,7 +61,7 @@ function Login() {
                             id="radio-ong"
                             onChange={() => setRadioType("ong")}
                         />
-                    </InputGroup>
+                    </InputGroup> */}
                     <Button type="submit">Entrar</Button>
                     <DontHaveAccountYetText>Ainda não tem conta? <Link to={"/cadastro"}>Cadastre-se já.</Link></DontHaveAccountYetText>
                 </FormContainer>

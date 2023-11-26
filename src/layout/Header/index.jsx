@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <style.Header>
-      <style.UserTypeDisplay>{ userType ? "Portal do Supermercado" : "Portal da ONG" }</style.UserTypeDisplay>
+      <style.UserTypeDisplay>{ userType === "supermarket" ? "Portal do Supermercado" : "Portal da ONG" }</style.UserTypeDisplay>
 
       <ProfileSquare />
     </style.Header>

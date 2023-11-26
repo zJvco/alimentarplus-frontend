@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const ProfileDropdown = forwardRef(function ProfileDropdown(props, ref) {
     const navigate = useNavigate()
 
-    const { logout } = useAuth()
+    const { logout, userType } = useAuth()
 
     const handleLogout = () => {
         logout()
@@ -25,9 +25,11 @@ const ProfileDropdown = forwardRef(function ProfileDropdown(props, ref) {
                     <Link href='/estabelecimento/perfil'>Minha Conta</Link>
                 </LinkContent>
 
-                <LinkContent>
-                    <Link href='/estabelecimento/planos'>Planos</Link>
-                </LinkContent>
+                {userType === "supermarket" && (
+                    <LinkContent>
+                        <Link href='/estabelecimento/planos'>Planos</Link>
+                    </LinkContent>
+                )}
 
                 <LinkContent>
                     <Link href='/estabelecimento/suporte'>Suporte</Link>

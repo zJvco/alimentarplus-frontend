@@ -40,11 +40,7 @@ function Products() {
   }
 
   const { isLoading, data: productsData } = useQuery("products", {
-    queryFn: async () => {
-      const data = await getProducts()
-
-      return filterAvailableValuesByList(AVAILABLE_TABLE_VALUES, data)
-    }
+    queryFn: async () => getProducts()
   })
 
   if (isLoading) {

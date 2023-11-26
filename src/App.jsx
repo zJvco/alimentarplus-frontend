@@ -21,9 +21,11 @@ import MainLayout from './Layout.jsx';
 import SMHome from './pages/SupermarketUI/Home';
 import SMProducts from './pages/SupermarketUI/Products/index.jsx';
 import SMProductView from './pages/SupermarketUI/ProductView/index.jsx';
+import SMDonations from './pages/SupermarketUI/Donations/index.jsx';
 
 // Ong
 import ONGHome from './pages/OngUI/Home/index.jsx';
+import ONGDonations from './pages/OngUI/Donations/index.jsx';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -93,6 +95,8 @@ function App() {
                     <Route index element={<SMProducts/>} />
                     <Route path=':id' element={<SMProductView />} />
                   </Route>
+
+                  <Route path='doacoes' element={<SMDonations />} />
                 </Route>
 
                 <Route
@@ -100,6 +104,8 @@ function App() {
                   element={<PrivateRouteOng />}
                 >
                   <Route index element={<ONGHome />} />
+
+                  <Route path='doacoes' element={<ONGDonations />} />
                 </Route>
 
               </Route>

@@ -10,10 +10,12 @@ function MUICustomToolBar(props) {
       <br/>
       <GridToolbarExport />
       <br/>
-      <Button style={{ width: "auto" }} onClick={() => props.setIsOpenCreateNewProdutoPopup(!props.isOpenCreateNewProdutoPopup)}>
-        <FaPlus style={{ marginRight: "8px" }} />
-        ADICIONAR
-      </Button>
+      { props.hasAddNewProductButton && (
+        <Button style={{ width: "auto" }} onClick={() => props.setIsOpenCreateNewProdutoPopup(!props.isOpenCreateNewProdutoPopup)}>
+          <FaPlus style={{ marginRight: "8px" }} />
+          ADICIONAR
+        </Button>
+      ) }
     </GridToolbarContainer>
   )
 }
