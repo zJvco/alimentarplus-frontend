@@ -11,8 +11,6 @@ import { setLocalStorageData } from '../../../utils/helpers'
 import UseRedirect from '../../../hooks/useRedirect'
 
 function Register() {
-  UseRedirect()
-
   const navigate = useNavigate()
 
   const [isOng, setIsOng] = useState(false)

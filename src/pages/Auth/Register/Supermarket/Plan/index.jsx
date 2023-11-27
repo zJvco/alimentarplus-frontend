@@ -12,16 +12,14 @@ import { updateLocalStorageData } from '../../../../../utils/helpers'
 import UseRedirect from '../../../../../hooks/useRedirect'
 
 function Plan() {
-    UseRedirect()
-
     const navigate = useNavigate()
 
     const handlePlanClick = (type) => {
         if (type === 0) {
-            updateLocalStorageData({"planData": {"type": "free"}})
+            updateLocalStorageData({"planData": {"name": "free"}})
         }
         else {
-            updateLocalStorageData({"planData": {"type": "premium"}})
+            updateLocalStorageData({"planData": {"name": "premium"}})
         }
 
         navigate("/cadastro/supermercado/confirmar")

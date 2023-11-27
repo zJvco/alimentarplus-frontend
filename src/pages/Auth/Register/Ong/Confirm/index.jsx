@@ -15,8 +15,6 @@ import UseRedirect from '../../../../../hooks/useRedirect'
 const mockedTitleData = ["Dados do Responsável", "Dados da ONG", "Endereço da ONG"]
 
 function Confirm() {
-  UseRedirect()
-  
   const navigate = useNavigate()
 
   const handleEditButton = () => {

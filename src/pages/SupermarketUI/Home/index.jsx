@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 function Home() {
     return (
-        <div>234</div>
+        <div></div>
     )
 }
 

@@ -40,7 +40,8 @@ function Products() {
   }
 
   const { isLoading, data: productsData } = useQuery("products", {
-    queryFn: async () => getProducts()
+    queryFn: () => getProducts(),
+    refetchOnWindowFocus: false
   })
 
   if (isLoading) {
@@ -57,7 +58,7 @@ function Products() {
       ) }
       <h1>Produtos</h1>
       <DataGrid
-        rows={productsData}
+        rows={productsData ? productsData : []}
         columns={muiTableColumns}
         checkboxSelection
         sx={muiCustomDataTableStyle}
@@ -65,7 +66,7 @@ function Products() {
           toolbar: MUICustomToolBar
         }}
         slotProps={{
-          toolbar: { isOpenCreateNewProdutoPopup: isOpenCreateNewProdutoPopup, setIsOpenCreateNewProdutoPopup: setIsOpenCreateNewProdutoPopup  }
+          toolbar: { isOpenCreateNewProdutoPopup: isOpenCreateNewProdutoPopup, setIsOpenCreateNewProdutoPopup: setIsOpenCreateNewProdutoPopup, hasAddNewProductButton: true  }
         }}
         onRowDoubleClick={(rowData) => navigate("/estabelecimento/produtos/" + rowData.id)}
         disableRowSelectionOnClick

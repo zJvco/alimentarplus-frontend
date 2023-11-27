@@ -10,8 +10,6 @@ import { updateLocalStorageData } from '../../../../../utils/helpers'
 import UseRedirect from '../../../../../hooks/useRedirect'
 
 function Address() {
-    UseRedirect()
-    
     const navigate = useNavigate()
 
     const [data, setData] = useState({})

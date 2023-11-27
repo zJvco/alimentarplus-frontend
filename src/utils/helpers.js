@@ -42,3 +42,7 @@ export const filterAvailableValuesByList = (availableValues, data) => {
         return newObject
     })
 }
+
+export const changeFirstLetterToUpperCase = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}

@@ -28,6 +28,7 @@ import ONGHome from './pages/OngUI/Home/index.jsx';
 import ONGDonations from './pages/OngUI/Donations/index.jsx';
 import ONGProducts from './pages/OngUI/Products/index.jsx';
 import ONGProductView from './pages/OngUI/ProductView/index.jsx';
+import Plans from './pages/SupermarketUI/Plans/index.jsx';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -99,6 +100,8 @@ function App() {
                   </Route>
 
                   <Route path='doacoes' element={<SMDonations />} />
+
+                  <Route path='planos' element={<Plans />} />
                 </Route>
 
                 <Route

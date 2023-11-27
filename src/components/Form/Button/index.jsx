@@ -7,10 +7,11 @@ function Button({
   margin,
   type,
   style,
-  className
+  className,
+  disabled=false
 }) {
   return (
-    <ButtonInput className={className} type={type} onClick={onClick} style={{ margin: margin,  ...style }}>
+    <ButtonInput className={`${className ? className : ""}${disabled ? "disabled" : ""}`} type={type} onClick={onClick} style={{ margin: margin,  ...style }}>
       { children }
     </ButtonInput>
   )
@@ -40,6 +41,11 @@ const ButtonInput = styled.button`
       &:hover {
         background-color: #bd3f31;
       }
+    }
+
+    &.disabled {
+      background-color: ${props => props.theme.colors.secondary};
+      cursor: not-allowed;
     }
 `
 
