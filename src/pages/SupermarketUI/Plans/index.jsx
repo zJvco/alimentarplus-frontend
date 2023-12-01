@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './styles'
 import useAuth from '../../../hooks/useAuth'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import api from '../../../api/config'
 import CircularLoader from '../../../components/CircularLoader'
 import Button from '../../../components/Form/Button'
@@ -10,6 +10,8 @@ import { changeFirstLetterToUpperCase } from '../../../utils/helpers'
 
 function Plans() {
     const { user, token } = useAuth()
+
+    const queryClient = useQueryClient()
 
     const getSupermarketById = async (id) => {
         const response = await api.get(`/supermarkets/${id}`, {
@@ -31,6 +33,20 @@ function Plans() {
         return response.data
     }
 
+    const updateSupermarketPlan = async (supermarketId, planId) => {
+        const data = {
+            "id": planId
+        }
+
+        const response = await api.post(`/supermarkets/${supermarketId}/update-plan`, JSON.stringify(data), {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+
+        return response.data
+    }
+
     const getSupermarketByIdQuery = useQuery(["supermarkets", user.id_supermarket], {
         queryFn: () => getSupermarketById(user.id_supermarket)
     })
@@ -39,12 +55,20 @@ function Plans() {
         queryFn: () => getAllPlans()
     })
 
-    const handleChangePlanButton = (planName) => {
-        if (getSupermarketByIdQuery.data.plan.name === planName) {
+    const updateSupermarketPlanMutation = useMutation({
+        mutationFn: (data) => updateSupermarketPlan(data.supermarket_id, data.plan_id),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries("plans")
+            queryClient.invalidateQueries("supermarkets")
+        }
+    })
+
+    const handleChangePlanButton = (planId) => {
+        if (getSupermarketByIdQuery.data.plan.name === planId) {
             return
         }
 
-        console.log(planName)
+        updateSupermarketPlanMutation.mutate({"supermarket_id": user.id_supermarket, "plan_id": planId})
     }
 
     if (getSupermarketByIdQuery.isLoading || getAllPlansQuery.isLoading) {
@@ -56,20 +80,10 @@ function Plans() {
             <style.Title>Planos</style.Title>
             <style.Container>
                 {getAllPlansQuery?.data.map(plan => {
-                    let planName;
-                    if (plan.name === "free") {
-                        planName = "Grátis"
-                    }
-                    else if (plan.name === "premium") {
-                        planName = "Premium"
-                    }
-
-                    if (getSupermarketByIdQuery.data.plan.name !== plan.name) return
-
                     return (
                         <style.PlanCard key={plan.id}>
                             <style.PlanTopSection>
-                                <style.PlanName>{planName}</style.PlanName>
+                                <style.PlanName>{changeFirstLetterToUpperCase(plan.name)}</style.PlanName>
                                 <style.PlanBenefitsList>
                                     {plan?.description.split(",").map(item => {
                                         return (
@@ -83,9 +97,9 @@ function Plans() {
                                 <style.PlanPriceDisplay>R${plan?.price}/mês</style.PlanPriceDisplay>
 
                                 { getSupermarketByIdQuery.data.plan.name === plan.name ? (
-                                    <Button margin="0" disabled={true} onClick={() => handleChangePlanButton(plan.name)} >Selecionado</Button>
+                                    <Button margin="0" disabled={true} onClick={() => handleChangePlanButton(plan.id)} >Selecionado</Button>
                                 ) : (
-                                    <Button margin="0" onClick={() => handleChangePlanButton(plan.name)}>Selecionar</Button>
+                                    <Button margin="0" onClick={() => handleChangePlanButton(plan.id)}>Selecionar</Button>
                                 ) }
                                 
                             </style.PlanBottomSection>

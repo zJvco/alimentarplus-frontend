@@ -41,6 +41,7 @@ const CancelButton = styled.button`
     outline: none;
     cursor: pointer;
     margin: 0 20px;
+    background-color: transparent;
 `
 
 const ActionsContainer = styled.div`

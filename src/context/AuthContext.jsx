@@ -17,6 +17,16 @@ export const AuthProvider = ({ children }) => {
 
     const queryClient = useQueryClient()
 
+    // Redirecionar usuário da página para tela de login
+    useEffect(() => {
+        let url = document.URL.trim()
+        
+        // Verifica se o usuário está na rota /
+        if (url.charAt(url.length - 1) === '/') {
+            window.location.href = "/login"
+        }
+    }, [isAuthenticated])
+
     const authDataFlow = () => {
         const _token = getJWTToken()
 
@@ -113,7 +123,7 @@ export const AuthProvider = ({ children }) => {
         }
     })
 
-    if (loginMutation.isLoading || isLoading) {
+    if (loginMutation.isLoading) {
         return (
             <div style={{
                 width: "100%",
@@ -129,21 +139,20 @@ export const AuthProvider = ({ children }) => {
             </div>
         )
     }
-    else {
-        return (
-            <AuthContext.Provider value={{
-                user,
-                token,
-                userType,
-                isLoading,
-                isAuthenticated,
-                login: loginMutation.mutate,
-                logout: logoutMutation.mutate
-            }}>
-                {children}
-            </AuthContext.Provider>
-        )
-    }
+    
+    return (
+        <AuthContext.Provider value={{
+            user,
+            token,
+            userType,
+            isLoading,
+            isAuthenticated,
+            login: loginMutation.mutate,
+            logout: logoutMutation.mutate
+        }}>
+            {!isLoading && children}
+        </AuthContext.Provider>
+    )
 }
 
 export default AuthContext;

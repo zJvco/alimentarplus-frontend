@@ -76,14 +76,23 @@ function App() {
             {/* Rotas de Autenticação */}
             <Routes>
               <Route path='/login' element={<Login />} />
-              <Route path='/cadastro' element={<Cadastro />} />
-              <Route path='/cadastro/supermercado/informacoes' element={<SupermarketInformation />} />
-              <Route path='/cadastro/supermercado/endereco' element={<SupermarketAddress />} />
-              <Route path='/cadastro/supermercado/planos' element={<SupermarketPlan />} />
-              <Route path='/cadastro/supermercado/confirmar' element={<SupermarketConfirm />} />
-              <Route path='/cadastro/ong/informacoes' element={<OngInformation />} />
-              <Route path='/cadastro/ong/endereco' element={<OngAddress />} />
-              <Route path='/cadastro/ong/confirmar' element={<OngConfirm />} />
+
+              <Route path='/cadastro'>
+                <Route index element={<Cadastro />} />
+                
+                <Route path='supermercado'>
+                  <Route path='informacoes' element={<SupermarketInformation />} />
+                  <Route path='endereco' element={<SupermarketAddress />} />
+                  <Route path='planos' element={<SupermarketPlan />} />
+                  <Route path='confirmar' element={<SupermarketConfirm />} />
+                </Route>
+
+                <Route path='ong'>
+                  <Route path='informacoes' element={<OngInformation />} />
+                  <Route path='endereco' element={<OngAddress />} />
+                  <Route path='confirmar' element={<OngConfirm />} />
+                </Route>
+              </Route>
 
               <Route
                 element={<PrivateRoute><MainLayout /></PrivateRoute>}
