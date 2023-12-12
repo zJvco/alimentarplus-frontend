@@ -38,5 +38,9 @@ export const muiCustomDataTableStyle = {
     // Colocar em negrito as colunas no header
     ".MuiDataGrid-columnHeaderTitle": {
         fontWeight: "bold"
+    },
+    // Tirar a borda azul na pesquisa da barra de tarefas
+    ".css-v4u5dn-MuiInputBase-root-MuiInput-root:after": {
+        borderBottom: `2px solid ${theme.colors.primary}`
     }
 }

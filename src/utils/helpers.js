@@ -1,3 +1,6 @@
+import format from "date-fns/format"
+import parseISO from "date-fns/parseISO"
+
 export const setLocalStorageData = (data) => {
     localStorage.setItem('KM2sk45sA', JSON.stringify(data))
 }
@@ -45,4 +48,12 @@ export const filterAvailableValuesByList = (availableValues, data) => {
 
 export const changeFirstLetterToUpperCase = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+export const convertDateType = (dateString) => {
+    return format(parseISO(dateString), "dd/MM/yyyy")
+}
+
+export const convertDatetimeType = (datetimeString) => {
+    return format(parseISO(datetimeString), "dd/MM/yyyy 'às' HH:mm:ss")
 }

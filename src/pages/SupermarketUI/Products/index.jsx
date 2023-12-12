@@ -3,23 +3,31 @@ import style from './styles'
 import { useQuery } from 'react-query'
 import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
-import { filterAvailableValuesByList } from '../../../utils/helpers'
 import { DataGrid, ptBR } from '@mui/x-data-grid';
 import CircularLoader from '../../../components/CircularLoader'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import CreateNewProductPopup from '../../../components/CreateNewProductPopup'
 import { useNavigate } from 'react-router-dom'
-
-const AVAILABLE_TABLE_VALUES = ["id", "name", "brand", "quantity_units", "is_active", "expiration_date"]
+import { convertDateType } from '../../../utils/helpers'
 
 const muiTableColumns = [
   { field: "id", headerName: "ID", flex: 1 },
   { field: "name", headerName: "Nome", flex: 1 },
   { field: "brand", headerName: "Marca", flex: 1 },
   { field: "quantity_units", headerName: "Quantidade Unidade", flex: 1 },
-  { field: "is_active", headerName: "Ativo", flex: 1 },
-  { field: "expiration_date", headerName: "Data de Validade", flex: 1 }
+  {
+    field: "is_active",
+    headerName: "Ativo",
+    flex: 1,
+    valueFormatter: (params) => params.value == "true" ? "Sim" : "Não"
+  },
+  {
+    field: "expiration_date",
+    headerName: "Data de Validade",
+    flex: 1,
+    valueFormatter: (params) => convertDateType(params.value)
+  }
 ]
 
 function Products() {
@@ -40,13 +48,8 @@ function Products() {
   }
 
   const { isLoading, data: productsData } = useQuery("products", {
-    queryFn: () => getProducts(),
-    refetchOnWindowFocus: false
+    queryFn: () => getProducts()
   })
-
-  if (isLoading) {
-    return <CircularLoader />
-  }
 
   return (
     <style.Container>
@@ -62,8 +65,10 @@ function Products() {
         columns={muiTableColumns}
         checkboxSelection
         sx={muiCustomDataTableStyle}
+        loading={isLoading}
         slots={{
-          toolbar: MUICustomToolBar
+          toolbar: MUICustomToolBar,
+          loadingOverlay: CircularLoader
         }}
         slotProps={{
           toolbar: { isOpenCreateNewProdutoPopup: isOpenCreateNewProdutoPopup, setIsOpenCreateNewProdutoPopup: setIsOpenCreateNewProdutoPopup, hasAddNewProductButton: true  }

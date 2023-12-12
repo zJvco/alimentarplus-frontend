@@ -1,79 +1,81 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './styles'
-import { useQuery } from 'react-query'
+import { useQuery, useQueries } from 'react-query'
 import api from '../../../api/config'
 import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
 import CircularLoader from '../../../components/CircularLoader'
+import { convertDatetimeType } from '../../../utils/helpers'
 
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
     { field: "id_product", headerName: "ID do Produto", flex: 1 },
-    { field: "id_ong", headerName: "ID da ONG", flex: 1 },
+    { field: "ong_name", headerName: "Nome da ONG", flex: 1 },
     { field: "situation", headerName: "Situação", flex: 1 },
+    { field: "created_date", headerName: "Data da Operação", flex: 1 },
 ]
 
 function Donations() {
     const { user, token } = useAuth()
 
-    // const [ongId, setOngId] = useState()
-
     const getAllDonations = async () => {
         const response = await api.get(`supermarkets/${user.id_supermarket}/donations`, {
             headers: {
-                "Authorization": "Bearer " + token 
+                "Authorization": "Bearer " + token
             }
         })
 
         return response.data
     }
 
-    // const getOngDataById = async (id) => {
-    //     console.log(id)
+    const getOngById = async (id) => {
+        const response = await api.get(`/ongs/${id}`, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
 
-    //     const response = await api.get(`/ongs/${id}`, {
-    //         headers: {
-    //             "Authorization": "Bearer " + token 
-    //         }
-    //     })
-
-    //     return response.data
-    // }
+        return response.data
+    }
 
     const getDonationsQuery = useQuery("donations", {
-        queryFn: () => getAllDonations(),
-        onSuccess: (data) => {
-            // setOngId(data.id_ong)
-        }
+        queryFn: () => getAllDonations()
     })
 
-    // const getOngByIdQuery = useQuery(["ongs", ongId], {
-    //     queryFn: () => {
-    //         for (const data of getDonationsQuery.data) {
-    //             console.log(data)
-    //         }
-    //         // getOngDataById(ongId)
-    //     },
-    //     enabled: !!getDonationsQuery.data
-    // })
 
-    if (getDonationsQuery.isLoading) {
-        return <CircularLoader />
-    }
+    const modifiedDonatiosQueries = useQueries(
+        getDonationsQuery.data?.map(donation => {
+            return {
+                queryKey: ['ongs', donation.id_ong],
+                queryFn: async () => {
+                    const result = await getOngById(donation.id_ong)
+
+                    donation.created_date = convertDatetimeType(donation.created_date)
+
+                    return { ...donation, "ong_name": result.name }
+                },
+                // refetchOnWindowFocus: false
+            }
+        }) ?? []
+    )
+
+    const modifiedDonationsIsLoading = modifiedDonatiosQueries.some(result => result.isLoading)
 
     return (
         <style.Container>
             <h1>Doações</h1>
             <DataGrid
-                rows={getDonationsQuery.data}
+                rows={!modifiedDonationsIsLoading ? modifiedDonatiosQueries.map(item => item.data) : []}
                 columns={muiTableColumns}
                 checkboxSelection
                 sx={muiCustomDataTableStyle}
                 slots={{
-                    toolbar: MUICustomToolBar
+                    toolbar: MUICustomToolBar,
+                    loadingOverlay: CircularLoader
                 }}
+                loading={modifiedDonationsIsLoading}
                 slotProps={{
                     toolbar: { hasAddNewProductButton: false }
                 }}

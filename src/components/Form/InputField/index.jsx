@@ -40,6 +40,7 @@ const Input = styled.input`
   border-radius: 5px;
   margin: 10px 0;
   width: 100%;
+  max-height: 40px;
 
   &:disabled {
     cursor: not-allowed;

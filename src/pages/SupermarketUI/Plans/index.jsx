@@ -7,6 +7,7 @@ import CircularLoader from '../../../components/CircularLoader'
 import Button from '../../../components/Form/Button'
 import { FaCheck } from 'react-icons/fa6'
 import { changeFirstLetterToUpperCase } from '../../../utils/helpers'
+import { notify } from '../../../utils/notify'
 
 function Plans() {
     const { user, token } = useAuth()
@@ -60,6 +61,8 @@ function Plans() {
         onSuccess: (data) => {
             queryClient.invalidateQueries("plans")
             queryClient.invalidateQueries("supermarkets")
+
+            notify("O seu plano foi alterado", "success")
         }
     })
 
