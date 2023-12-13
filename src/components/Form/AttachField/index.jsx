@@ -4,14 +4,17 @@ import { FaImage } from 'react-icons/fa6'
 import { useState } from 'react'
 import CloseButton from '../../CloseButton'
 import { useEffect } from 'react'
+import InputErrorMessage from '../InputErrorMessage'
 
 function AttachField({
     id,
     label,
     multipleFiles=false,
     marginLeft,
+    name,
     files=[],
-    setFiles
+    setFiles,
+    error
 }) {
     const handleAddedFile = (e) => {
         const { files: inputFiles } = e.target
@@ -29,7 +32,7 @@ function AttachField({
         <Container style={{ marginLeft: marginLeft }}>
             {label && <Title>{label}</Title>}
             <Label htmlFor={id}>
-                <Input type='file' id={id} onChange={handleAddedFile} multiple={multipleFiles} />
+                <Input type='file' id={id} onChange={handleAddedFile} onClick={(e) => e.target.value = ""} multiple={multipleFiles} />
 
                 <Content>
                     <FaImage style={{ fontSize: "40px" }} />
@@ -50,6 +53,7 @@ function AttachField({
                     )
                 })}
             </FileDisplayList>
+            {error && <InputErrorMessage error={error} />}
         </Container>
     )
 }

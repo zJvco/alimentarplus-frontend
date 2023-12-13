@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import InputErrorMessage from '../InputErrorMessage'
 
-function InputField({
+const InputField = React.forwardRef(({
   label,
   value,
   placeholder,
@@ -11,8 +12,9 @@ function InputField({
   id,
   name,
   marginLeft,
-  disable=false
-}) {
+  disable=false,
+  error
+}, ref) => {
   return (
     <Container
       style={{ marginLeft: marginLeft }}
@@ -28,17 +30,19 @@ function InputField({
         id={id}
         name={name}
         disabled={disable}
+        ref={ref}
       />
+      {error && <InputErrorMessage error={error} />}
     </Container>
   )
-}
+})
 
 const Input = styled.input`
   border: 1px solid ${props => props.theme.colors.borderColor};
   padding: 10px;
   outline: none;
   border-radius: 5px;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
   width: 100%;
   max-height: 40px;
 

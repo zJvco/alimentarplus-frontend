@@ -12,31 +12,46 @@ import api from '../../api/config'
 import useAuth from '../../hooks/useAuth'
 import { notify } from '../../utils/notify'
 import { useEffect } from 'react'
+import { useRef } from 'react'
+import { productValidations } from '../../utils/validations'
 
 function CreateNewProductPopup({
   isOpen,
   setIsOpen
 }) {
+  const totalWeightGramsInputRef = useRef()
+
   const queryClient = useQueryClient()
 
   const { user, token } = useAuth()
   
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({
+    "name": "",
+    "brand": "",
+    "description": "",
+    "unit_weight_grams": "",
+    "total_weight_grams": "",
+    "quantity_units": "",
+    "expiration_date": "",
+    "url_product_img": "",
+    "url_expiration_date_img": "",
+  })
   const [formProductImageFile, setFormProductImageFile] = useState([])
   const [formProductExpirationDateImageFile, setFormProductExpirationDateImageFile] = useState([])
+  const [inputErrors, setInputErrors] = useState({})
 
   const handleClosePopup = () => {
     setIsOpen(!isOpen)
   }
 
   const uploadFiles = async (files) => {
-    const formData = new FormData()
+    const fd = new FormData()
 
     for (const file of files) {
-      formData.append("files", file)
+      fd.append("files", file)
     }
 
-    const response = await api.post("/upload/", formData, {
+    const response = await api.post("/upload/", fd, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: "Bearer " + token
@@ -56,13 +71,22 @@ function CreateNewProductPopup({
     return response.data
   }
 
-  const uploadProductImageMutation = useMutation(uploadFiles)
-  const uploadProductExpirationDateImageMutation = useMutation(uploadFiles)
-
+  const uploadProductImageMutation = useMutation(uploadFiles, {
+    onError: () => {
+      notify("Erro ao cadastrar a imagem do produto no servidor", "error")
+    }
+  })
+  const uploadProductExpirationDateImageMutation = useMutation(uploadFiles, {
+    onError: () => {
+      notify("Erro ao cadastrar a imagem de validade do produto no servidor", "error")
+    }
+  })
   const createProductMutation = useMutation(createProduct, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("products")
-      notify("Produto cadastrado com sucesso!", "success")
+
+      notify("Produto cadastrado com sucesso", "success")
+
       setIsOpen(!isOpen)
     },
     onError: () => {
@@ -70,24 +94,43 @@ function CreateNewProductPopup({
     }
   })
 
+  const handleInput = (e) => {
+    const newObj = {...formData, [e.target.name]: e.target.value}
+
+    if (e.target.name === "unit_weight_grams" || e.target.name === "quantity_units") {
+      const totalWeightCalc = newObj.unit_weight_grams * newObj.quantity_units
+
+      totalWeightGramsInputRef.current.value = totalWeightCalc
+
+      setFormData({...newObj, "total_weight_grams": totalWeightCalc})
+    }
+    else {
+      setFormData(newObj)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (formProductImageFile.length === 0 || formProductExpirationDateImageFile.length === 0) {
-      notify("Necessário adicionar arquivos de imagens", "error")
-      return
+    const uploadedProductImage = await uploadProductImageMutation.mutateAsync(formProductImageFile)
+    const uploadedProductExpirationDateImage = await uploadProductExpirationDateImageMutation.mutateAsync(formProductExpirationDateImageFile)
+
+    const newObjData = {
+      ...formData,
+      "url_product_img": uploadedProductImage[0].file_url,
+      "url_expiration_date_img": uploadedProductExpirationDateImage[0].file_url
     }
 
-    const uploadProductImageData = await uploadProductImageMutation.mutateAsync(formProductImageFile)
-    const uploadProductExpirationDateImageData = await uploadProductExpirationDateImageMutation.mutateAsync(formProductExpirationDateImageFile)
-    
-    if (uploadProductImageData && uploadProductExpirationDateImageData) {
-      createProductMutation.mutate({
-        ...formData,
-        "url_product_img": uploadProductImageData[0].file_url,
-        "url_expiration_date_img": uploadProductExpirationDateImageData[0].file_url
-      })
+    const validations = productValidations(newObjData)
+    const isReadyToSend = (Object.keys(validations).length === 0) && (uploadedProductImage.length !== 0) && (uploadedProductExpirationDateImage.length !== 0)
+
+    if (isReadyToSend) {
+      createProductMutation.mutate(newObjData)
+
+      setFormData(newObjData)
     }
+
+    setInputErrors(validations)
   }
 
   return (
@@ -100,25 +143,25 @@ function CreateNewProductPopup({
         <style.Form onSubmit={handleSubmit}>
 
           <InputGroup>
-            <InputField label="Nome" placeholder="Insira o nome do seu produto" onChange={(e) => setFormData({...formData, "name": e.target.value})} />
-            <InputField label="Marca" marginLeft="10px" placeholder="Insira a marca do seu produto" onChange={(e) => setFormData({...formData, "brand": e.target.value})} />
+            <InputField label="Nome" name="name" placeholder="Insira o nome do seu produto" onChange={handleInput} error={inputErrors.name && inputErrors.name} />
+            <InputField label="Marca" name="brand" marginLeft="10px" placeholder="Insira a marca do seu produto" onChange={handleInput} error={inputErrors.brand && inputErrors.brand} />
           </InputGroup>
 
           <InputGroup>
-            <InputField label="Peso total (kg)" type="number" placeholder="Insira o nome do seu produto" onChange={(e) => setFormData({...formData, "total_weight_grams": e.target.value})} />
-            <InputField label="Data de validade" type="date" marginLeft="10px" onChange={(e) => setFormData({...formData, "expiration_date": e.target.value})} />
+            <InputField label="Peso por unidade (g)" name="unit_weight_grams" type="number" placeholder="Insira o peso por unidade" onChange={handleInput} error={inputErrors.unit_weight_grams && inputErrors.unit_weight_grams} />
+            <InputField label="Quantidade de unidades" name="quantity_units" type="number" marginLeft="10px" placeholder="Insira a quantidade de produtos/embalagens" onChange={handleInput} error={inputErrors.quantity_units && inputErrors.quantity_units} />
           </InputGroup>
 
           <InputGroup>
-            <InputField label="Peso por unidade (kg)" type="number" placeholder="Insira o peso por unidade" onChange={(e) => setFormData({...formData, "unit_weight_grams": e.target.value})} />
-            <InputField label="Quantidade de unidades" type="number" marginLeft="10px" placeholder="Insira a quantidade de produtos/embalagens" onChange={(e) => setFormData({...formData, "quantity_units": e.target.value})} />
+            <InputField label="Peso total (g)" name="total_weight_grams" type="number" disable placeholder="Peso total" ref={totalWeightGramsInputRef} error={inputErrors.total_weight_grams && inputErrors.total_weight_grams} />
+            <InputField label="Data de validade" name="expiration_date" type="date" marginLeft="10px" onChange={handleInput} error={inputErrors.expiration_date && inputErrors.expiration_date} />
           </InputGroup>
 
-          <TextField label="Descrição" placeholder="Insira uma descrição para o seu produto" rows="10" onChange={(e) => setFormData({...formData, "description": e.target.value})} />
+          <TextField label="Descrição" name="description" placeholder="Insira uma descrição para o seu produto" rows="10" onChange={handleInput} error={inputErrors.description && inputErrors.description} />
 
           <InputGroup>
-            <AttachField label="Imagem do produto" files={formProductImageFile} setFiles={setFormProductImageFile} />
-            <AttachField label="Imagem da validade do produto" marginLeft="10px" files={formProductExpirationDateImageFile} setFiles={setFormProductExpirationDateImageFile} />
+            <AttachField label="Imagem do produto" files={formProductImageFile} setFiles={setFormProductImageFile} error={inputErrors.url_product_img && inputErrors.url_product_img} />
+            <AttachField label="Imagem da validade do produto" marginLeft="10px" files={formProductExpirationDateImageFile} setFiles={setFormProductExpirationDateImageFile} error={inputErrors.url_expiration_date_img && inputErrors.url_expiration_date_img} />
           </InputGroup>
 
           <style.ActionsContainer>

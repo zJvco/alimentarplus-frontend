@@ -1,17 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import InputErrorMessage from '../InputErrorMessage'
 
 function TextField({
-    label,
-    value,
-    placeholder,
-    type,
-    onChange,
-    className,
-    id,
-    name,
-    rows,
-    cols
+  label,
+  value,
+  placeholder,
+  type,
+  onChange,
+  className,
+  id,
+  name,
+  rows,
+  cols,
+  error
 }) {
   return (
     <Container>
@@ -28,6 +30,8 @@ function TextField({
         rows={rows}
         cols={cols}
       />
+
+      {error && <InputErrorMessage error={error} />}
     </Container>
   )
 }
@@ -42,12 +46,13 @@ const Label = styled.label`
 `
 
 const TextArea = styled.textarea`
-    border: 1px solid ${props => props.theme.colors.borderColor};
-    padding: 10px;
-    outline: none;
-    border-radius: 5px;
-    margin: 10px 0;
-    width: 100%;
+  display: flex;
+  border: 1px solid ${props => props.theme.colors.borderColor};
+  padding: 10px;
+  outline: none;
+  border-radius: 5px;
+  margin: 10px 0 0 0;
+  width: 100%;
 `
 
 export default TextField
