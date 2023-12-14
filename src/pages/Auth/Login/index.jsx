@@ -10,29 +10,28 @@ import { notify } from "../../../utils/notify"
 import useAuth from "../../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import UseRedirect from "../../../hooks/useRedirect"
+import { loginValidations } from "../../../utils/validations"
 
 function Login() {
     UseRedirect()
 
-    const navigate = useNavigate()
-
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    // const [radioType, setRadioType] = useState(null)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [inputErrors, setInputErrors] = useState({})
 
     const { login } = useAuth()
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        login({ "email": email, "password": password })
+        const validations = loginValidations({"email": email, "password": password})
+        const isReadyToSend = Object.keys(validations).length === 0
 
-        // if (radioType == "supermarket") {
-        //     navigate("/estabelecimento")
-        // }
-        // else if (radioType == "ong") {
-        //     navigate("/ong")
-        // }
+        if (isReadyToSend) {
+            login({ "email": email, "password": password })
+        }
+
+        setInputErrors(validations)
     }
 
     return (
@@ -41,27 +40,9 @@ function Login() {
                 <Header>Alimentar+</Header>
                 <FormContainer onSubmit={handleSubmit}>
                     <Title>Acesse sua conta</Title>
-                    <InputField type="text" label="E-mail" onChange={(e) => setEmail(e.target.value)} />
-                    <InputField type="password" label="Senha" onChange={(e) => setPassword(e.target.value)} />
+                    <InputField type="text" label="E-mail" onChange={(e) => setEmail(e.target.value)} error={inputErrors.email && inputErrors.email} />
+                    <InputField type="password" label="Senha" onChange={(e) => setPassword(e.target.value)} error={inputErrors.password && inputErrors.password} />
                     <ForgotPasswordText>Esqueceu sua senha? <Link to={"/esqueci-a-senha"}>Clique aqui.</Link></ForgotPasswordText>
-                    {/* <InputGroup
-                        margin="12px 0 0 0"
-                    >
-                        <RadioField
-                            name="radio"
-                            value="supermercado"
-                            label="Supermercado"
-                            id="radio-supermercado"
-                            onChange={() => setRadioType("supermarket")}
-                        />
-                        <RadioField
-                            name="radio"
-                            value="ong"
-                            label="ONG"
-                            id="radio-ong"
-                            onChange={() => setRadioType("ong")}
-                        />
-                    </InputGroup> */}
                     <Button type="submit">Entrar</Button>
                     <DontHaveAccountYetText>Ainda não tem conta? <Link to={"/cadastro"}>Cadastre-se já.</Link></DontHaveAccountYetText>
                 </FormContainer>

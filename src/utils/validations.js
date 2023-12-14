@@ -10,6 +10,10 @@ export const loginValidations = ( values ) => {
         errors.email = "E-mail inválido"
     }
 
+    if (values.password === "") {
+        errors.password = "Insira uma senha"
+    }
+
     return errors
 }
 
