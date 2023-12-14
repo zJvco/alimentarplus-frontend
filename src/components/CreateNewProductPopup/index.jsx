@@ -154,12 +154,12 @@ function CreateNewProductPopup({
           </InputGroup>
 
           <InputGroup>
-            <InputField label="Peso por unidade (g)" name="unit_weight_grams" type="number" placeholder="Insira o peso por unidade" onChange={handleInput} error={inputErrors.unit_weight_grams && inputErrors.unit_weight_grams} />
-            <InputField label="Quantidade de unidades" name="quantity_units" type="number" marginLeft="10px" placeholder="Insira a quantidade de produtos/embalagens" onChange={handleInput} error={inputErrors.quantity_units && inputErrors.quantity_units} />
+            <InputField label="Peso por unidade (g)" name="unit_weight_grams" type="number" placeholder="Insira o peso por unidade" onChange={handleInput} error={inputErrors.unit_weight_grams && inputErrors.unit_weight_grams} numberDecimal=".01" numberMin="0" />
+            <InputField label="Quantidade de unidades" name="quantity_units" type="number" marginLeft="10px" placeholder="Insira a quantidade de produtos/embalagens" onChange={handleInput} error={inputErrors.quantity_units && inputErrors.quantity_units} numberMin="0" />
           </InputGroup>
 
           <InputGroup>
-            <InputField label="Peso total (g)" name="total_weight_grams" type="number" disable placeholder="Peso total" ref={totalWeightGramsInputRef} error={inputErrors.total_weight_grams && inputErrors.total_weight_grams} />
+            <InputField label="Peso total (g)" name="total_weight_grams" type="number" disable placeholder="Peso total" ref={totalWeightGramsInputRef} error={inputErrors.total_weight_grams && inputErrors.total_weight_grams} numberDecimal=".01" numberMin="0" />
             <InputField label="Data de validade" name="expiration_date" type="date" marginLeft="10px" onChange={handleInput} error={inputErrors.expiration_date && inputErrors.expiration_date} />
           </InputGroup>
 
