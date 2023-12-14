@@ -90,6 +90,7 @@ const Text = styled.span`
 
 const Container = styled.div`
     width: 100%;
+    margin: 5px 0;
 `
 
 const Title = styled.label`

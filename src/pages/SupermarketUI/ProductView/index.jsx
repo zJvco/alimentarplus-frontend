@@ -14,6 +14,8 @@ import Button from '../../../components/Form/Button'
 import AttachField from '../../../components/Form/AttachField'
 import { useEffect } from 'react'
 import { notify } from '../../../utils/notify'
+import { productValidations } from '../../../utils/validations'
+import ConfirmationPopup from '../../../components/ConfirmationPopup'
 
 function ProductView() {
   const navigate = useNavigate()
@@ -34,13 +36,14 @@ function ProductView() {
     "url_product_img": "",
     "url_expiration_date_img": ""
   })
+  const [isOpenDeleteConfirmationPopup, setIsOpenDeleteConfirmationPopup] = useState(false)
 
   const { user, token } = useAuth()
 
   const getProduct = async (id) => {
     const response = await api.get(`/supermarkets/${user.id_supermarket}/products/${id}`, {
       headers: {
-        Authorization: "Bearer " + token 
+        Authorization: "Bearer " + token
       }
     })
 
@@ -50,7 +53,7 @@ function ProductView() {
   const deleteProduct = async (id) => {
     const response = await api.delete(`/supermarkets/${user.id_supermarket}/products/${id}`, {
       headers: {
-        Authorization: "Bearer " + token 
+        Authorization: "Bearer " + token
       }
     })
 
@@ -60,7 +63,7 @@ function ProductView() {
   const updateProduct = async (id, data) => {
     const response = await api.put(`/supermarkets/${user.id_supermarket}/products/${id}`, JSON.stringify(data), {
       headers: {
-        Authorization: "Bearer " + token 
+        Authorization: "Bearer " + token
       }
     })
 
@@ -71,7 +74,7 @@ function ProductView() {
     queryFn: () => getProduct(productId),
     onSuccess: (data) => {
       for (let key in updatedFormData) {
-        setUpdatedFormData((prev) => ({...prev, [key]: data[key]}))
+        setUpdatedFormData((prev) => ({ ...prev, [key]: data[key] }))
       }
       setIsSwitchActive(data.is_active)
     },
@@ -85,7 +88,7 @@ function ProductView() {
       notify("Produto deletado com sucesso", "success")
     }
   })
-  
+
   const updateProductMutation = useMutation({
     mutationFn: () => {
       updateProduct(productId, updatedFormData)
@@ -114,13 +117,13 @@ function ProductView() {
   }
 
   const handleInputChange = (key, event) => {
-      const { value } = event.target
+    const { value } = event.target
 
-      setUpdatedFormData({...updatedFormData, [key]: value})
+    setUpdatedFormData({ ...updatedFormData, [key]: value })
   }
 
   useEffect(() => {
-    setUpdatedFormData({...updatedFormData, "is_active": isSwitchActive})
+    setUpdatedFormData({ ...updatedFormData, "is_active": isSwitchActive })
   }, [isSwitchActive])
 
   if (isLoading) {
@@ -136,20 +139,20 @@ function ProductView() {
         <InputGroup>
           <InputField label="ID" value={productData?.id} disable={true} />
           <InputField label="Nome" marginLeft="10px" value={productData?.name} onChange={(e) => handleInputChange("name", e)} />
-          <InputField label="Marca" marginLeft="10px" value={productData?.brand} onChange={(e) => handleInputChange("brand", e)}/>
+          <InputField label="Marca" marginLeft="10px" value={productData?.brand} onChange={(e) => handleInputChange("brand", e)} />
         </InputGroup>
 
         <InputGroup>
-          <InputField label="Peso por unidade (kg)" type="number" value={productData?.unit_weight_grams} onChange={(e) => handleInputChange("unit_weight_grams", e)} />
-          <InputField label="Quantidade de unidades" marginLeft="10px" value={productData?.quantity_units} onChange={(e) => handleInputChange("quantity_units", e)}/>
+          <InputField label="Peso por unidade (g)" type="number" value={productData?.unit_weight_grams} onChange={(e) => handleInputChange("unit_weight_grams", e)} />
+          <InputField label="Quantidade de unidades" marginLeft="10px" value={productData?.quantity_units} onChange={(e) => handleInputChange("quantity_units", e)} />
           <InputField label="Data de validade" marginLeft="10px" type="date" value={productData?.expiration_date} onChange={(e) => handleInputChange("expiration_date", e)} />
         </InputGroup>
 
         <InputGroup>
-          <InputField label="Peso total (kg)" value={productData?.total_weight_grams} onChange={(e) => handleInputChange("total_weight_grams", e)} />
+          <InputField label="Peso total (g)" value={productData?.total_weight_grams} onChange={(e) => handleInputChange("total_weight_grams", e)} />
           <SwitchField label="Ativo" marginLeft="10px" onClick={handleSwitchClick} isActive={isSwitchActive} />
         </InputGroup>
-        
+
         <TextField label="Descrição" value={productData?.description} rows="10" onChange={(e) => handleInputChange("description", e)} />
 
         {/* <InputGroup>
@@ -159,10 +162,19 @@ function ProductView() {
 
         <style.ActionsContainer>
           <style.CancelButton type='button' onClick={() => navigate("/estabelecimento/produtos")}>Cancelar</style.CancelButton>
-          <Button type="button" className="danger" margin="0 15px 0 0" onClick={handleDeleteProduct}>Excluir produto</Button>
+          <Button type="button" className="danger" margin="0 15px 0 0" onClick={() => setIsOpenDeleteConfirmationPopup(true)}>Excluir produto</Button>
           <Button type="submit">Salvar produto</Button>
         </style.ActionsContainer>
       </style.Form>
+
+      {isOpenDeleteConfirmationPopup && (
+        <ConfirmationPopup
+          title="Deseja realmente deletar esse produto?"
+          setClose={setIsOpenDeleteConfirmationPopup}
+          close={isOpenDeleteConfirmationPopup}
+          actionFn={handleDeleteProduct}
+        />
+      )}
     </style.Container>
   )
 }
