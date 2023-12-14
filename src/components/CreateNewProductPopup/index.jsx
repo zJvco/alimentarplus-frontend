@@ -112,13 +112,19 @@ function CreateNewProductPopup({
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const uploadedProductImage = await uploadProductImageMutation.mutateAsync(formProductImageFile)
-    const uploadedProductExpirationDateImage = await uploadProductExpirationDateImageMutation.mutateAsync(formProductExpirationDateImageFile)
-
     const newObjData = {
-      ...formData,
-      "url_product_img": uploadedProductImage[0].file_url,
-      "url_expiration_date_img": uploadedProductExpirationDateImage[0].file_url
+      ...formData
+    }
+
+    let uploadedProductImage
+    let uploadedProductExpirationDateImage
+
+    if (formProductImageFile.length !== 0 && formProductExpirationDateImageFile.length !== 0) {
+      uploadedProductImage = await uploadProductImageMutation.mutateAsync(formProductImageFile)
+      uploadedProductExpirationDateImage = await uploadProductExpirationDateImageMutation.mutateAsync(formProductExpirationDateImageFile)
+
+      newObjData.url_product_img = uploadedProductImage[0].file_url
+      newObjData.url_expiration_date_img = uploadedProductExpirationDateImage[0].file_url
     }
 
     const validations = productValidations(newObjData)

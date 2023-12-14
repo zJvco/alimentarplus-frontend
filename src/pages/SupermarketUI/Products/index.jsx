@@ -20,7 +20,7 @@ const muiTableColumns = [
     field: "is_active",
     headerName: "Ativo",
     flex: 1,
-    valueFormatter: (params) => params.value == "true" ? "Sim" : "Não"
+    valueFormatter: (params) => params.value == true ? "Sim" : "Não"
   },
   {
     field: "expiration_date",
