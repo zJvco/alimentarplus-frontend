@@ -48,7 +48,8 @@ function Products() {
   }
 
   const { isLoading, data: productsData } = useQuery("products", {
-    queryFn: () => getProducts()
+    queryFn: () => getProducts(),
+    retry: false
   })
 
   return (

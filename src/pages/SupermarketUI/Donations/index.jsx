@@ -41,7 +41,8 @@ function Donations() {
     }
 
     const getDonationsQuery = useQuery("donations", {
-        queryFn: () => getAllDonations()
+        queryFn: () => getAllDonations(),
+        retry: false
     })
 
 
@@ -75,7 +76,7 @@ function Donations() {
                     toolbar: MUICustomToolBar,
                     loadingOverlay: CircularLoader
                 }}
-                loading={modifiedDonationsIsLoading}
+                loading={modifiedDonationsIsLoading || getDonationsQuery.isLoading}
                 slotProps={{
                     toolbar: { hasAddNewProductButton: false }
                 }}
