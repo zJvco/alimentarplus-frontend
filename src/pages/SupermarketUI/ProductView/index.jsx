@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import style from './styles'
 import InputField from '../../../components/Form/InputField'
 import InputGroup from '../../../components/Form/InputGroup'
@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 import { notify } from '../../../utils/notify'
 import { productValidations } from '../../../utils/validations'
 import ConfirmationPopup from '../../../components/ConfirmationPopup'
+import { formatDecimalNumber } from '../../../utils/helpers'
 
 function ProductView() {
   const navigate = useNavigate()
@@ -37,6 +38,8 @@ function ProductView() {
     "url_expiration_date_img": ""
   })
   const [isOpenDeleteConfirmationPopup, setIsOpenDeleteConfirmationPopup] = useState(false)
+  
+  const totalWeightGramsInputRef = useRef()
 
   const { user, token } = useAuth()
 
@@ -116,10 +119,20 @@ function ProductView() {
     setIsSwitchActive(!isSwitchActive)
   }
 
-  const handleInputChange = (key, event) => {
-    const { value } = event.target
+  const handleInputChange = (e) => {
+    const newObj = { ...updatedFormData, [e.target.name]: e.target.value }
 
-    setUpdatedFormData({ ...updatedFormData, [key]: value })
+    if (e.target.name === "unit_weight_grams" || e.target.name === "quantity_units") {
+      const totalWeightCalc = newObj.unit_weight_grams * newObj.quantity_units
+      // const totalWeightCalcFormatted = formatDecimalNumber(totalWeightCalc, 2)
+
+      totalWeightGramsInputRef.current.value = totalWeightCalc
+
+      setUpdatedFormData({ ...newObj, "total_weight_grams": totalWeightCalc })
+    }
+    else {
+      setUpdatedFormData(newObj)
+    }
   }
 
   useEffect(() => {
@@ -137,23 +150,75 @@ function ProductView() {
 
       <style.Form onSubmit={handleUpdateProduct}>
         <InputGroup>
-          <InputField label="ID" value={productData?.id} disable={true} />
-          <InputField label="Nome" marginLeft="10px" value={productData?.name} onChange={(e) => handleInputChange("name", e)} />
-          <InputField label="Marca" marginLeft="10px" value={productData?.brand} onChange={(e) => handleInputChange("brand", e)} />
+          <InputField
+            label="ID"
+            value={productData?.id}
+            disable={true}
+          />
+          <InputField
+            label="Nome"
+            name="name"
+            marginLeft="10px"
+            value={productData?.name}
+            onChange={handleInputChange}
+          />
+          <InputField
+            label="Marca"
+            name="brand"
+            marginLeft="10px"
+            value={productData?.brand}
+            onChange={handleInputChange}
+          />
         </InputGroup>
 
         <InputGroup>
-          <InputField label="Peso por unidade (g)" type="number" value={productData?.unit_weight_grams} onChange={(e) => handleInputChange("unit_weight_grams", e)} />
-          <InputField label="Quantidade de unidades" marginLeft="10px" value={productData?.quantity_units} onChange={(e) => handleInputChange("quantity_units", e)} />
-          <InputField label="Data de validade" marginLeft="10px" type="date" value={productData?.expiration_date} onChange={(e) => handleInputChange("expiration_date", e)} />
+          <InputField
+            label="Peso por unidade (g)"
+            name="unit_weight_grams"
+            value={productData?.unit_weight_grams}
+            onChange={handleInputChange}
+          />
+          <InputField
+            label="Quantidade de unidades"
+            name="quantity_units"
+            marginLeft="10px"
+            value={productData?.quantity_units}
+            onChange={handleInputChange}
+          />
+          <InputField
+            label="Data de validade"
+            name="expiration_date"
+            marginLeft="10px"
+            type="date"
+            value={productData?.expiration_date}
+            onChange={handleInputChange}
+          />
         </InputGroup>
 
         <InputGroup>
-          <InputField label="Peso total (g)" value={productData?.total_weight_grams} onChange={(e) => handleInputChange("total_weight_grams", e)} />
-          <SwitchField label="Ativo" marginLeft="10px" onClick={handleSwitchClick} isActive={isSwitchActive} />
+          <InputField
+            label="Peso total (g)"
+            name="total_weight_grams"
+            value={productData?.total_weight_grams}
+            onChange={handleInputChange}
+            ref={totalWeightGramsInputRef}
+            disable
+          />
+          <SwitchField
+            label="Ativo"
+            marginLeft="10px"
+            onClick={handleSwitchClick}
+            isActive={isSwitchActive}
+          />
         </InputGroup>
 
-        <TextField label="Descrição" value={productData?.description} rows="10" onChange={(e) => handleInputChange("description", e)} />
+        <TextField
+          label="Descrição"
+          name="description"
+          value={productData?.description}
+          rows="10"
+          onChange={handleInputChange}
+        />
 
         {/* <InputGroup>
           <AttachField label="Imagem do produto" />

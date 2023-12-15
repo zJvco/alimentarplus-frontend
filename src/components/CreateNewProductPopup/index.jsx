@@ -14,6 +14,8 @@ import { notify } from '../../utils/notify'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { productValidations } from '../../utils/validations'
+import CircularLoader from '../../components/CircularLoader'
+import { formatDecimalNumber } from '../../utils/helpers'
 
 function CreateNewProductPopup({
   isOpen,
@@ -24,7 +26,7 @@ function CreateNewProductPopup({
   const queryClient = useQueryClient()
 
   const { user, token } = useAuth()
-  
+
   const [formData, setFormData] = useState({
     "name": "",
     "brand": "",
@@ -67,7 +69,7 @@ function CreateNewProductPopup({
         Authorization: "Bearer " + token
       }
     })
-    
+
     return response.data
   }
 
@@ -94,15 +96,16 @@ function CreateNewProductPopup({
     }
   })
 
-  const handleInput = (e) => {
-    const newObj = {...formData, [e.target.name]: e.target.value}
+  const handleInputChange = (e) => {
+    const newObj = { ...formData, [e.target.name]: e.target.value }
 
     if (e.target.name === "unit_weight_grams" || e.target.name === "quantity_units") {
       const totalWeightCalc = newObj.unit_weight_grams * newObj.quantity_units
+      // const totalWeightCalcFormatted = formatDecimalNumber(totalWeightCalc, 2)
 
       totalWeightGramsInputRef.current.value = totalWeightCalc
 
-      setFormData({...newObj, "total_weight_grams": totalWeightCalc})
+      setFormData({ ...newObj, "total_weight_grams": totalWeightCalc })
     }
     else {
       setFormData(newObj)
@@ -142,40 +145,94 @@ function CreateNewProductPopup({
   return (
     <style.TransparentBackground>
       <style.Container>
-        <style.Header>
-          <style.Title>Cadastrar novo produto</style.Title>
-        </style.Header>
+        {createProductMutation.isLoading ? (
+          <CircularLoader />
+        ) : (
+          <>
+            <style.Header>
+              <style.Title>Cadastrar novo produto</style.Title>
+            </style.Header>
 
-        <style.Form onSubmit={handleSubmit}>
+            <style.Form onSubmit={handleSubmit}>
 
-          <InputGroup>
-            <InputField label="Nome" name="name" placeholder="Insira o nome do seu produto" onChange={handleInput} error={inputErrors.name && inputErrors.name} />
-            <InputField label="Marca" name="brand" marginLeft="10px" placeholder="Insira a marca do seu produto" onChange={handleInput} error={inputErrors.brand && inputErrors.brand} />
-          </InputGroup>
+              <InputGroup>
+                <InputField
+                  label="Nome"
+                  name="name"
+                  placeholder="Insira o nome do seu produto"
+                  onChange={handleInputChange}
+                  error={inputErrors.name && inputErrors.name}
+                />
+                <InputField
+                  label="Marca"
+                  name="brand"
+                  marginLeft="10px"
+                  placeholder="Insira a marca do seu produto"
+                  onChange={handleInputChange}
+                  error={inputErrors.brand && inputErrors.brand}
+                />
+              </InputGroup>
 
-          <InputGroup>
-            <InputField label="Peso por unidade (g)" name="unit_weight_grams" type="number" placeholder="Insira o peso por unidade" onChange={handleInput} error={inputErrors.unit_weight_grams && inputErrors.unit_weight_grams} numberDecimal=".01" numberMin="0" />
-            <InputField label="Quantidade de unidades" name="quantity_units" type="number" marginLeft="10px" placeholder="Insira a quantidade de produtos/embalagens" onChange={handleInput} error={inputErrors.quantity_units && inputErrors.quantity_units} numberMin="0" />
-          </InputGroup>
+              <InputGroup>
+                <InputField
+                  label="Peso por unidade (g)"
+                  name="unit_weight_grams"
+                  placeholder="Insira o peso por unidade"
+                  onChange={handleInputChange}
+                  error={inputErrors.unit_weight_grams && inputErrors.unit_weight_grams}
+                />
+                <InputField
+                  label="Quantidade de unidades"
+                  name="quantity_units"
+                  type="number"
+                  marginLeft="10px"
+                  placeholder="Insira a quantidade de produtos/embalagens"
+                  onChange={handleInputChange}
+                  error={inputErrors.quantity_units && inputErrors.quantity_units}
+                />
+              </InputGroup>
 
-          <InputGroup>
-            <InputField label="Peso total (g)" name="total_weight_grams" type="number" disable placeholder="Peso total" ref={totalWeightGramsInputRef} error={inputErrors.total_weight_grams && inputErrors.total_weight_grams} numberDecimal=".01" numberMin="0" />
-            <InputField label="Data de validade" name="expiration_date" type="date" marginLeft="10px" onChange={handleInput} error={inputErrors.expiration_date && inputErrors.expiration_date} />
-          </InputGroup>
+              <InputGroup>
+                <InputField
+                  label="Peso total (g)"
+                  name="total_weight_grams"
+                  disable
+                  placeholder="Peso total"
+                  ref={totalWeightGramsInputRef}
+                  error={inputErrors.total_weight_grams && inputErrors.total_weight_grams}
+                />
+                <InputField
+                  label="Data de validade"
+                  name="expiration_date"
+                  type="date"
+                  marginLeft="10px"
+                  onChange={handleInputChange}
+                  error={inputErrors.expiration_date && inputErrors.expiration_date}
+                />
+              </InputGroup>
 
-          <TextField label="Descrição" name="description" placeholder="Insira uma descrição para o seu produto" rows="10" onChange={handleInput} error={inputErrors.description && inputErrors.description} />
+              <TextField
+                label="Descrição"
+                name="description"
+                placeholder="Insira uma descrição para o seu produto"
+                rows="10"
+                onChange={handleInputChange}
+                error={inputErrors.description && inputErrors.description}
+              />
 
-          <InputGroup>
-            <AttachField label="Imagem do produto" files={formProductImageFile} setFiles={setFormProductImageFile} error={inputErrors.url_product_img && inputErrors.url_product_img} />
-            <AttachField label="Imagem da validade do produto" marginLeft="10px" files={formProductExpirationDateImageFile} setFiles={setFormProductExpirationDateImageFile} error={inputErrors.url_expiration_date_img && inputErrors.url_expiration_date_img} />
-          </InputGroup>
+              <InputGroup>
+                <AttachField label="Imagem do produto" files={formProductImageFile} setFiles={setFormProductImageFile} error={inputErrors.url_product_img && inputErrors.url_product_img} />
+                <AttachField label="Imagem da validade do produto" marginLeft="10px" files={formProductExpirationDateImageFile} setFiles={setFormProductExpirationDateImageFile} error={inputErrors.url_expiration_date_img && inputErrors.url_expiration_date_img} />
+              </InputGroup>
 
-          <style.ActionsContainer>
-            <style.CancelButton type='button' onClick={handleClosePopup}>Cancelar</style.CancelButton>
-            <Button type="submit" style={{ width: "auto" }}>Salvar produto</Button>
-          </style.ActionsContainer>
+              <style.ActionsContainer>
+                <style.CancelButton type='button' onClick={handleClosePopup}>Cancelar</style.CancelButton>
+                <Button type="submit" style={{ width: "auto" }}>Salvar produto</Button>
+              </style.ActionsContainer>
 
-        </style.Form>
+            </style.Form>
+          </>
+        )}
       </style.Container>
     </style.TransparentBackground>
   )

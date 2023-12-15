@@ -14,9 +14,6 @@ const InputField = React.forwardRef(({
   marginLeft,
   disable=false,
   error,
-  numberDecimal,
-  numberMin,
-  numberMax
 }, ref) => {
   return (
     <Container
@@ -34,9 +31,6 @@ const InputField = React.forwardRef(({
         name={name}
         disabled={disable}
         ref={ref}
-        step={numberDecimal}
-        min={numberMin}
-        max={numberMax}
       />
       {error && <InputErrorMessage error={error} />}
     </Container>

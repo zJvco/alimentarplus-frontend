@@ -57,3 +57,7 @@ export const convertDateType = (dateString) => {
 export const convertDatetimeType = (datetimeString) => {
     return format(parseISO(datetimeString), "dd/MM/yyyy 'às' HH:mm:ss")
 }
+
+export const formatDecimalNumber = (number, step) => {
+    return Number(number.toFixed(step)).toLocaleString('pt-BR')
+}
