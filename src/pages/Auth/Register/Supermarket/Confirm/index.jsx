@@ -22,7 +22,7 @@ function Confirm() {
 
   const mutation = useMutation({
     mutationFn: () => {
-      return api.post("/auth/register?type=supermarket", getFormatedRegisterDataJSONResponse("supermarket"))
+      return api.post("/auth/register?type=supermarket", getFormatedRegisterDataJSONResponse(getLocalStorageData(), "supermarket"))
     },
     onSuccess: () => {
       notify("Dados cadastrados com sucesso", "success")

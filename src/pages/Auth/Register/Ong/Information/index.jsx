@@ -17,7 +17,7 @@ function Information() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    updateLocalStorageData({"InformationData": data})
+    updateLocalStorageData({ "informationData": data })
 
     navigate("/cadastro/ong/endereco")
   }
@@ -31,7 +31,7 @@ function Information() {
       <ProgressBarContainer>
         <ProgressBar style={{ width: "25%" }} />
       </ProgressBarContainer>
-      
+
       <Container>
         <Title>Informações da ONG</Title>
         <Subtitle>Preencha as informações da sua ONG.</Subtitle>
@@ -41,25 +41,31 @@ function Information() {
             label="Nome do estabelecimento (Nome Fantasia)"
             placeholder="Como vai aparecer no app. Ex: Carrefour - Guarulhos"
             type="text"
-            onChange={(e) => setData({...data, name: e.target.value})}
+            onChange={(e) => setData({ ...data, name: e.target.value })}
           />
           <InputField
             label="Razão social"
             placeholder="Ex: Carrefour Mercados LTD."
             type="text"
-            onChange={(e) => setData({...data, bussiness_name: e.target.value})}
+            onChange={(e) => setData({ ...data, business_name: e.target.value })}
+          />
+          <InputField
+            label="Inscrição Estadual"
+            placeholder="Ex: 000000000"
+            type="text"
+            onChange={(e) => setData({ ...data, state_registration: e.target.value })}
           />
           <InputField
             label="Telefone"
-            placeholder="Telefone para contato com o estabelecimento"
+            placeholder="Telefone para contato com a ONG"
             type="tel"
-            onChange={(e) => setData({...data, phone_number: e.target.value})}
+            onChange={(e) => setData({ ...data, phone_number: e.target.value })}
           />
           <InputField
             label="CNPJ"
             placeholder="00.000.000/0000-00"
             type="text"
-            onChange={(e) => setData({...data, cnpj: e.target.value})}
+            onChange={(e) => setData({ ...data, cnpj: e.target.value })}
           />
           <Button type="submit">Continuar</Button>
         </FormContainer>

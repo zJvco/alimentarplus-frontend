@@ -15,9 +15,7 @@ export const getLocalStorageData = () => {
     return JSON.parse(localStorage.getItem('KM2sk45sA'))
 }
 
-export const getFormatedRegisterDataJSONResponse = (type) => {
-    const data = getLocalStorageData()
-
+export const getFormatedRegisterDataJSONResponse = (data, type) => {
     if (type === "supermarket") {
         return JSON.stringify({
             "user": { ...data["userData"] },
@@ -27,7 +25,7 @@ export const getFormatedRegisterDataJSONResponse = (type) => {
     else if (type === "ong") {
         return JSON.stringify({
             "user": { ...data["userData"] },
-            "supermarket": { ...data["informationData"], "address": { ...data["addressData"] } }
+            "ong": { ...data["informationData"], "address": { ...data["addressData"] } }
         })
     }
 }
