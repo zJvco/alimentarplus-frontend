@@ -17,6 +17,37 @@ export const loginValidations = ( values ) => {
     return errors
 }
 
+export const supermarketRegistrationValidations = ( values ) => {
+    const errors = {}
+
+    const emailPattern = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i
+
+    if (values.name === "") {
+        errors.name = "Insira um nome"
+    }
+
+    if (values.email === "") {
+        errors.email = "Insira um e-mail"
+    }
+    else if (!emailPattern.test(values.email)) {
+        errors.email = "E-mail inválido"
+    }
+
+    if (values.phone_number === "") {
+        errors.phone_number = "Insira um número de telefone"
+    }
+
+    if (values.cpf === "") {
+        errors.cpf = "Insira um CPF"
+    }
+
+    if (values.password === "") {
+        errors.password = "Insira uma senha"
+    }
+
+    return errors
+}
+
 export const productValidations = ( values ) => {
     const errors = {}
 

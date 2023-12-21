@@ -9,28 +9,44 @@ import { BackgroundColor, Container, Title, Subtitle, Footer, FooterContent, For
 import { useState } from 'react'
 import { setLocalStorageData } from '../../../utils/helpers'
 import UseRedirect from '../../../hooks/useRedirect'
+import { supermarketRegistrationValidations } from '../../../utils/validations'
 
 function Register() {
   const navigate = useNavigate()
 
   const [isOng, setIsOng] = useState(false)
-  const [data, setData] = useState({})
+  const [data, setData] = useState({
+    "name": "",
+    "email": "",
+    "phone_number": "",
+    "cpf": "",
+    "password": ""
+  })
+  const [inputErrors, setInputErrors] = useState({})
 
   const handleCadastroSubmit = (e) => {
     e.preventDefault()
 
-    setLocalStorageData({"userData": data})
+    const validations = supermarketRegistrationValidations(data)
 
-    if (isOng === false) {
-      navigate("/cadastro/supermercado/informacoes")
+    if (Object.keys(validations).length === 0) {
+      setLocalStorageData({"userData": data})
+  
+      if (isOng === false) {
+        navigate("/cadastro/supermercado/informacoes")
+      }
+      else if (isOng === true) {
+        navigate("/cadastro/ong/informacoes")
+      }
     }
-    else if (isOng === true) {
-      navigate("/cadastro/ong/informacoes")
-    }
-    else {
-      // 
-    }
+
+    setInputErrors(validations)
   }
+
+
+  useEffect(() => {
+    console.log(inputErrors)
+  }, [inputErrors])
 
   return (
     <BackgroundColor>
@@ -48,30 +64,35 @@ function Register() {
             placeholder="Nome completo do responsável"
             type="text"
             onChange={(e) => setData({...data, name: e.target.value})}
+            error={inputErrors.name && inputErrors.name}
           />
           <InputField
             label="E-mail"
             placeholder="E-mail do responsável"
             type="text"
             onChange={(e) => setData({...data, email: e.target.value})}
+            error={inputErrors.email && inputErrors.email}
           />
           <InputField
             label="Celular"
             placeholder="Celular do responsável"
             type="tel"
             onChange={(e) => setData({...data, phone_number: e.target.value})}
+            error={inputErrors.phone_number && inputErrors.phone_number}
           />
           <InputField
             label="CPF"
             placeholder="000.000.000-00"
             type="text"
             onChange={(e) => setData({...data, cpf: e.target.value})}
+            error={inputErrors.cpf && inputErrors.cpf}
           />
           <InputField
             label="Senha"
             placeholder="Escolha uma senha forte"
             type="password"
             onChange={(e) => setData({...data, password: e.target.value})}
+            error={inputErrors.password && inputErrors.password}
           />
           <InputGroup margin="5px 0" >
             <RadioField
