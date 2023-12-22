@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "aws s3 sync ./dist 's3://alimentarplus.com.br/'"
+    "deploy": "aws s3 sync ./dist 's3://app.alimentarplus.com.br/'"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
