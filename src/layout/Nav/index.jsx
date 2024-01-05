@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './styles'
-import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore } from 'react-icons/fa6'
+import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore, FaChartArea, FaChartColumn } from 'react-icons/fa6'
 import useAuth from '../../hooks/useAuth'
 
 function Nav() {
@@ -26,11 +26,20 @@ function Nav() {
       <style.Links>
         { userType === "supermarket" ? (
           <>
-            <style.LinkContainer>
+            {/* <style.LinkContainer>
               <style.Link href='/estabelecimento' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaHouse />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
                   <style.LinkTitle key="Home" className={isMenuOpen ? "show" : ""}>Home</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer> */}
+
+            <style.LinkContainer>
+              <style.Link href='/estabelecimento' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaChartColumn />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>
@@ -40,15 +49,6 @@ function Nav() {
                 <FaBoxOpen />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
                   <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
-                </style.LinkTitleHelper>
-              </style.Link>
-            </style.LinkContainer>
-
-            <style.LinkContainer>
-              <style.Link href='/estabelecimento/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-                <FaSquarePollVertical />
-                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-                  <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>
@@ -64,11 +64,20 @@ function Nav() {
           </>
         ) : (
           <>
-            <style.LinkContainer>
+            {/* <style.LinkContainer>
               <style.Link href='/ong' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaHouse />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
                   <style.LinkTitle key="Home" className={isMenuOpen ? "show" : ""}>Home</style.LinkTitle>
+                </style.LinkTitleHelper>
+              </style.Link>
+            </style.LinkContainer> */}
+
+            <style.LinkContainer>
+              <style.Link href='/ong' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+                <FaChartColumn />
+                <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
+                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>

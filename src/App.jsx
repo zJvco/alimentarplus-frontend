@@ -18,13 +18,13 @@ import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './compon
 import MainLayout from './Layout.jsx';
 
 // Supermercado
-import SMHome from './pages/SupermarketUI/Home';
+import SMDashboard from './pages/SupermarketUI/Dashboard/index.jsx'
 import SMProducts from './pages/SupermarketUI/Products/index.jsx';
 import SMProductView from './pages/SupermarketUI/ProductView/index.jsx';
 import SMDonations from './pages/SupermarketUI/Donations/index.jsx';
 
 // Ong
-import ONGHome from './pages/OngUI/Home/index.jsx';
+import ONGDashboard from './pages/OngUI/Dashboard/index.jsx'
 import ONGDonations from './pages/OngUI/Donations/index.jsx';
 import ONGProducts from './pages/OngUI/Products/index.jsx';
 import ONGProductView from './pages/OngUI/ProductView/index.jsx';
@@ -101,7 +101,7 @@ function App() {
                   path='/estabelecimento'
                   element={<PrivateRouteSupermarket />}
                 >
-                  <Route index element={<SMHome />} />
+                  <Route index element={<SMDashboard />} />
 
                   <Route path='produtos'>
                     <Route index element={<SMProducts/>} />
@@ -117,7 +117,7 @@ function App() {
                   path='/ong'
                   element={<PrivateRouteOng />}
                 >
-                  <Route index element={<ONGHome />} />
+                  <Route index element={<ONGDashboard />} />
 
                   <Route path='doacoes' element={<ONGDonations />} />
 
