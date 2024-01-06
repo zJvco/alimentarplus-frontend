@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         let url = document.URL.trim()
         
-        // Verifica se o usuário está na rota /
-        if (url.charAt(url.length - 1) === '/') {
+        // Verifica se o usuário está na rota / OU estabelecimento OU ong
+        if (url.charAt(url.length - 1) === '/' || url.split("/").slice(-1)[0] === "estabelecimento" || url.split("/").slice(-1)[0] === "ong") {
             window.location.href = "/login"
         }
     }, [isAuthenticated])

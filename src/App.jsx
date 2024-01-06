@@ -101,7 +101,7 @@ function App() {
                   path='/estabelecimento'
                   element={<PrivateRouteSupermarket />}
                 >
-                  <Route index element={<SMDashboard />} />
+                  <Route path='dashboard' element={<SMDashboard />} />
 
                   <Route path='produtos'>
                     <Route index element={<SMProducts/>} />
@@ -117,7 +117,7 @@ function App() {
                   path='/ong'
                   element={<PrivateRouteOng />}
                 >
-                  <Route index element={<ONGDashboard />} />
+                  <Route path='dasboard' element={<ONGDashboard />} />
 
                   <Route path='doacoes' element={<ONGDonations />} />
 

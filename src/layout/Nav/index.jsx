@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './styles'
-import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore, FaChartArea, FaChartColumn } from 'react-icons/fa6'
+import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore, FaChartArea, FaChartColumn, FaBowlFood } from 'react-icons/fa6'
 import useAuth from '../../hooks/useAuth'
 
 function Nav() {
@@ -36,7 +36,7 @@ function Nav() {
             </style.LinkContainer> */}
 
             <style.LinkContainer>
-              <style.Link href='/estabelecimento' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+              <style.Link href='/estabelecimento/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaChartColumn />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
                   <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
@@ -74,19 +74,19 @@ function Nav() {
             </style.LinkContainer> */}
 
             <style.LinkContainer>
-              <style.Link href='/ong' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+              <style.Link href='/ong/dashboard' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaChartColumn />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
+                  <style.LinkTitle key="Dashboard" className={isMenuOpen ? "show" : ""}>Dashboard</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>
 
             <style.LinkContainer>
               <style.Link href='/ong/produtos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
-                <FaStore />
+                <FaBowlFood />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
-                  <style.LinkTitle key="Produtos" className={isMenuOpen ? "show" : ""}>Produtos</style.LinkTitle>
+                  <style.LinkTitle key="Alimentos" className={isMenuOpen ? "show" : ""}>Alimentos</style.LinkTitle>
                 </style.LinkTitleHelper>
               </style.Link>
             </style.LinkContainer>

@@ -12,10 +12,10 @@ const UseRedirect = () => {
         if (isAuthenticated) {
 
             if (userType === "supermarket") {
-                return navigate("/estabelecimento")
+                return navigate("/estabelecimento/dashboard")
             }
             else if (userType === "ong") {
-                return navigate("/ong")
+                return navigate("/ong/dashboard")
             }
         }
         else {
