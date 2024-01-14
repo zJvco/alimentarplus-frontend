@@ -8,62 +8,108 @@ const Title = styled.h1`
 
 `
 
-const ProductsList = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    margin: 30px 0;
+const AllSupermarketsContainer = styled.div`
+    margin: 20px 0;
 `
 
-const ProductImage = styled.img`
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    background-color: #CCCCCC;
-    border-radius: 8px;
+const InfosContainer = styled.div`
+
 `
 
-const ProductContentContainer = styled.div`
+const SupermarketLink = styled.a`
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: unset;
+    
+    &:hover {
+        text-decoration: none;
+        color: unset;
+    }
+`
+
+const SupermarketImageContainer = styled.div`
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #CCC;
+`
+
+const SupermarketImage = styled.img`
+
+`
+
+const SupermarketName = styled.span`
     margin-left: 10px;
 `
 
-const ProductCard = styled.div`
+const ProductsContainer = styled.div`
     display: flex;
-    margin: 15px;
+    flex-wrap: wrap;
 `
 
-const ProductNameText = styled.span`
-    display: block;
+const ProductsList = styled.ul`
+    list-style-type: none;
+    margin: 20px 0;
 `
 
-const ProductOwnerText = styled.span`
-    display: block;
+const ProductRow = styled.li`
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-right: 20px;
+    border-radius: 10px;
+
+    &:hover {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
 `
 
-const ProductUnitsAvailableText = styled.span`
-    display: block;
+const ProductLink = styled.a`
+    text-decoration: none;
+    color: unset;
+
+    &:hover {
+        text-decoration: none;
+        color: unset;
+    }
 `
 
-const ProductContent = styled.div`
-
+const ProductImage = styled.img`
+    width: 200px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
 `
 
-const ProductContentFooter = styled.div`
+const ProductInformations = styled.div`
+    padding: 5px 10px;
+    margin-bottom: 10px;
+`
+
+const ProductName = styled.p`
+    font-weight: bold;
+`
+
+const ProductQuantity = styled.p`
 
 `
 
 export default {
     Container,
     Title,
-    ProductCard,
+    InfosContainer,
     ProductImage,
-    ProductContentContainer,
-    ProductNameText,
-    ProductOwnerText,
-    ProductUnitsAvailableText,
+    ProductInformations,
+    ProductName,
+    ProductQuantity,
+    ProductsContainer,
     ProductsList,
-    ProductContent,
-    ProductContentFooter,
+    SupermarketLink,
+    SupermarketImageContainer,
+    SupermarketImage,
+    SupermarketName,
+    AllSupermarketsContainer,
+    ProductRow,
+    ProductLink
 }

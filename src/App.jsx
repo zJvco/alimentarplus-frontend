@@ -117,13 +117,29 @@ function App() {
                   path='/ong'
                   element={<PrivateRouteOng />}
                 >
-                  <Route path='dasboard' element={<ONGDashboard />} />
+                  <Route path='dashboard' element={<ONGDashboard />} />
 
                   <Route path='doacoes' element={<ONGDonations />} />
 
-                  <Route path='produtos'>
+                  <Route
+                  
+                  >
+
+                  </Route>
+
+                  <Route path='estabelecimentos'>
                     <Route index element={<ONGProducts />} />
-                    <Route path=':id' element={<ONGProductView />} />
+
+                    <Route
+                      path=':name'
+                    >
+                      <Route index />
+                      <Route
+                        path='produtos'
+                      >
+                        <Route path=':id' element={<ONGProductView />} />
+                      </Route>
+                    </Route>
                   </Route>
                 </Route>
 

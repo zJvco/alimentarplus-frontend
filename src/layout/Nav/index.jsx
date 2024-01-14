@@ -83,7 +83,7 @@ function Nav() {
             </style.LinkContainer>
 
             <style.LinkContainer>
-              <style.Link href='/ong/produtos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
+              <style.Link href='/ong/estabelecimentos' style={isMenuOpen ? { justifyContent: "start" } : { justifyContent: "center" }}>
                 <FaBowlFood />
                 <style.LinkTitleHelper className={isMenuOpen ? "show" : ""}>
                   <style.LinkTitle key="Alimentos" className={isMenuOpen ? "show" : ""}>Alimentos</style.LinkTitle>

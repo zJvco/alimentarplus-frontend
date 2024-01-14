@@ -13,8 +13,30 @@ function Products() {
 
     const { token } = useAuth()
 
-    const getAllProducts = async () => {
-        const response = await api.get("/products", {
+    // const getAllProducts = async () => {
+    //     const response = await api.get("/products", {
+    //         headers: {
+    //             Authorization: "Bearer " + token
+    //         }
+    //     })
+
+    //     return response.data
+    // }
+
+    // const getAllProductsQuery = useQuery("products", {
+    //     queryFn: () => getAllProducts()
+    // })
+
+    // const handleVisualizeProductButton = (productId) => {
+    //     navigate(`/ong/produtos/${productId}`)
+    // }
+
+    // if (getAllProductsQuery.isLoading) {
+    //     return <CircularLoader />
+    // }
+
+    const getAllSupermarkets = async () => {
+        const response = await api.get("/supermarkets",{
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -23,48 +45,50 @@ function Products() {
         return response.data
     }
 
-    const getAllProductsQuery = useQuery("products", {
-        queryFn: () => getAllProducts()
+    const getAllSupermarketsQuery = useQuery("supermarkets", {
+        queryFn: () => getAllSupermarkets()
     })
-
-    const handleVisualizeProductButton = (productId) => {
-        navigate(`/ong/produtos/${productId}`)
-    }
-
-    if (getAllProductsQuery.isLoading) {
-        return <CircularLoader />
-    }
 
     return (
         <style.Container>
-            <style.Title>Produtos disponíveis</style.Title>
+            <style.Title>Alimentos disponíveis</style.Title>
 
-            <style.ProductsList>
-                {getAllProductsQuery.data.map(product => {
-                    if (!product.is_active) return
-                    
-                    return (
-                        <style.ProductCard key={product.id}>
-                            <style.ProductImage src={product.url_product_img} alt='Imagem do produto' />
+            { getAllSupermarketsQuery.isLoading ? (
+                <CircularLoader />
+            ) : (
+                <style.AllSupermarketsContainer>
+                    { getAllSupermarketsQuery?.data?.map(supermarket => {
+                        return (
+                            <style.InfosContainer>
+                                <style.SupermarketLink href={"/ong/estabelecimentos/" + supermarket.name}>
+                                    <style.SupermarketImageContainer>
+                                        <style.SupermarketImage />
+                                    </style.SupermarketImageContainer>
+                                    <style.SupermarketName>{supermarket.name}</style.SupermarketName>
+                                </style.SupermarketLink>
 
-                            <style.ProductContentContainer>
-                                <style.ProductContent>
-                                    <b><style.ProductNameText>{product.name}</style.ProductNameText></b>
-                                    <style.ProductOwnerText>Supermercado - {product.id_supermarket}</style.ProductOwnerText>
-                                    <style.ProductUnitsAvailableText>{product.quantity_units} unidades</style.ProductUnitsAvailableText>
-                                </style.ProductContent>
-                                <style.ProductContentFooter>
-                                    <Button margin="0" onClick={() => handleVisualizeProductButton(product.id)}>
-                                        Ver produto&nbsp;&nbsp;
-                                        <FaEye />
-                                    </Button>
-                                </style.ProductContentFooter>
-                            </style.ProductContentContainer>
-                        </style.ProductCard>
-                    )
-                })}
-
-            </style.ProductsList>
+                                <style.ProductsContainer>
+                                    { supermarket?.products?.map(product => {
+                                        return (
+                                            <style.ProductsList>
+                                                <style.ProductRow>
+                                                    <style.ProductLink href={"/ong/estabelecimentos/" + supermarket.name + "/produtos/" + product.id}>
+                                                        <style.ProductImage src={ product.url_product_img } />
+                                                        <style.ProductInformations>
+                                                            <style.ProductName>{ product.name }</style.ProductName>
+                                                            <style.ProductQuantity>{ product.quantity_units } unidades</style.ProductQuantity>
+                                                        </style.ProductInformations>
+                                                    </style.ProductLink>
+                                                </style.ProductRow>
+                                            </style.ProductsList>
+                                        )
+                                    }) }
+                                </style.ProductsContainer>
+                            </style.InfosContainer>
+                        )
+                    }) }
+                </style.AllSupermarketsContainer>
+            ) }
         </style.Container>
     )
 }
