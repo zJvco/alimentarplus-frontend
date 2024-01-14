@@ -68,7 +68,11 @@ function Products() {
                                 </style.SupermarketLink>
 
                                 <style.ProductsContainer>
-                                    { supermarket?.products?.map(product => {
+                                    { supermarket?.products?.map((product, index) => {
+                                        if (index >= 5) {
+                                            return 
+                                        }
+                                        
                                         return (
                                             <style.ProductsList>
                                                 <style.ProductRow>

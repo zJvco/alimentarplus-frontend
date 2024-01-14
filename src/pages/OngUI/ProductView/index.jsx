@@ -8,6 +8,7 @@ import CircularLoader from '../../../components/CircularLoader'
 import Button from '../../../components/Form/Button'
 import { useState } from 'react'
 import { notify } from '../../../utils/notify'
+import { convertDateType } from '../../../utils/helpers'
 
 function ProductView() {
     const { id: productId } = useParams()
@@ -120,7 +121,7 @@ function ProductView() {
                             </style.ProductInfoContentBox>
                             <style.ProductInfoContentBox>
                                 <style.ProductInfoContentBoxTitle>Data de validade</style.ProductInfoContentBoxTitle>
-                                <style.ProductInfoContentBoxValue>{getProductByIdQuery?.data?.expiration_date}</style.ProductInfoContentBoxValue>
+                                <style.ProductInfoContentBoxValue>{convertDateType(getProductByIdQuery?.data?.expiration_date)}</style.ProductInfoContentBoxValue>
                             </style.ProductInfoContentBox>
                             <style.ProductInfoContentBox>
                                 <style.ProductInfoContentBoxTitle>Peso unidade</style.ProductInfoContentBoxTitle>
@@ -151,13 +152,13 @@ function ProductView() {
                     </style.ProductLocalizationContentContainer>
                 </style.ProductLocalizationSection>
 
-                <Button type="button" onClick={handleContinueButton}>Continuar</Button>
+                <Button type="button" onClick={handleContinueButton}>Gostaria de doar esse alimento?</Button>
             </style.Container>
 
             { isOpenedPopup && (
                 <style.PopupBackground>
                     <style.PopupContainer>
-                        <style.PopupTitle>Tem certeza que seja prosseguir? </style.PopupTitle>
+                        <style.PopupTitle>Tem certeza que deseja prosseguir? </style.PopupTitle>
                         <style.PopupText>A partir do momento em que a sua organização fica responsável pelo produto, é obrigação da ONG fazer a coleta e distribuição desses alimentos.</style.PopupText>
                         <style.PopupActions>
                             <Button className="danger" margin="0" onClick={handleDonationDoNotAgreed}>NÃO</Button>

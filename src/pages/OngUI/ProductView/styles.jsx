@@ -43,10 +43,11 @@ const ProductImage = styled.img`
 const ProductSideInfoContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
+    max-width: 600px;
 `
 
 const ProductInfoContentBox = styled.div`
-    margin: 5px 15px;
+    margin: 5px 25px;
 `
 
 const ProductInfoContentBoxTitle = styled.span`
