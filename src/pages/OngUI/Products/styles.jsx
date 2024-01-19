@@ -44,11 +44,12 @@ const SupermarketName = styled.span`
 `
 
 const ProductsContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    
 `
 
 const ProductsList = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     margin: 20px 0;
 `

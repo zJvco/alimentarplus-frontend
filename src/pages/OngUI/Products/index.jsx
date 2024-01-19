@@ -9,34 +9,10 @@ import { FaEye } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 
 function Products() {
-    const navigate = useNavigate()
-
     const { token } = useAuth()
 
-    // const getAllProducts = async () => {
-    //     const response = await api.get("/products", {
-    //         headers: {
-    //             Authorization: "Bearer " + token
-    //         }
-    //     })
-
-    //     return response.data
-    // }
-
-    // const getAllProductsQuery = useQuery("products", {
-    //     queryFn: () => getAllProducts()
-    // })
-
-    // const handleVisualizeProductButton = (productId) => {
-    //     navigate(`/ong/produtos/${productId}`)
-    // }
-
-    // if (getAllProductsQuery.isLoading) {
-    //     return <CircularLoader />
-    // }
-
     const getAllSupermarkets = async () => {
-        const response = await api.get("/supermarkets",{
+        const response = await api.get("/supermarkets", {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -59,7 +35,7 @@ function Products() {
                 <style.AllSupermarketsContainer>
                     { getAllSupermarketsQuery?.data?.map(supermarket => {
                         return (
-                            <style.InfosContainer>
+                            <style.InfosContainer key={supermarket.id}>
                                 <style.SupermarketLink href={"/ong/estabelecimentos/" + supermarket.name}>
                                     <style.SupermarketImageContainer>
                                         <style.SupermarketImage />
@@ -68,14 +44,14 @@ function Products() {
                                 </style.SupermarketLink>
 
                                 <style.ProductsContainer>
-                                    { supermarket?.products?.map((product, index) => {
-                                        if (index >= 5) {
-                                            return 
-                                        }
-                                        
-                                        return (
-                                            <style.ProductsList>
-                                                <style.ProductRow>
+                                    <style.ProductsList>
+                                        { supermarket?.products?.map((product, index) => {
+                                            if (index >= 5) {
+                                                return
+                                            }
+
+                                            return (
+                                                <style.ProductRow key={index}>
                                                     <style.ProductLink href={"/ong/estabelecimentos/" + supermarket.name + "/produtos/" + product.id}>
                                                         <style.ProductImage src={ product.url_product_img } />
                                                         <style.ProductInformations>
@@ -84,9 +60,9 @@ function Products() {
                                                         </style.ProductInformations>
                                                     </style.ProductLink>
                                                 </style.ProductRow>
-                                            </style.ProductsList>
-                                        )
-                                    }) }
+                                            )
+                                        }) }
+                                    </style.ProductsList>
                                 </style.ProductsContainer>
                             </style.InfosContainer>
                         )
@@ -96,7 +72,5 @@ function Products() {
         </style.Container>
     )
 }
-
-
 
 export default Products

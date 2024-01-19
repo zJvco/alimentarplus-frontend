@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './components/PrivateRoute/index.jsx';
 import MainLayout from './Layout.jsx';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { API_URL } from './api/config.js';
 
 // Supermercado
 import SMDashboard from './pages/SupermarketUI/Dashboard/index.jsx'
@@ -60,10 +62,20 @@ const GlobalStyle = createGlobalStyle`
 const queryClient = new QueryClient()
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
 
+      {/* Lib para adicionar a tag meta CSP */}
+      <HelmetProvider>
+
+        {API_URL.includes("https") && (
+          <Helmet>
+            <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+          </Helmet>
+        )}
+      </HelmetProvider>
+
+      {/* Estilo Global */}
       <GlobalStyle />
 
       <QueryClientProvider client={queryClient}>
