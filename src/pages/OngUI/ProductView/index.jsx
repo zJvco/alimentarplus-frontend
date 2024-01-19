@@ -152,7 +152,7 @@ function ProductView() {
                     </style.ProductLocalizationContentContainer>
                 </style.ProductLocalizationSection>
 
-                <Button type="button" onClick={handleContinueButton}>Gostaria de doar esse alimento?</Button>
+                <Button type="button" onClick={handleContinueButton}>Quero doar esse alimento</Button>
             </style.Container>
 
             { isOpenedPopup && (
