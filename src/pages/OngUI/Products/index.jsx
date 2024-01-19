@@ -50,6 +50,10 @@ function Products() {
                                                 return
                                             }
 
+                                            if (product.is_active === false) {
+                                                return
+                                            }
+
                                             return (
                                                 <style.ProductRow key={index}>
                                                     <style.ProductLink href={"/ong/estabelecimentos/" + supermarket.name + "/produtos/" + product.id}>
