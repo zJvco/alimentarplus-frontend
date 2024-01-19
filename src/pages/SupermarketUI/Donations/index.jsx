@@ -12,7 +12,8 @@ import { convertDatetimeType } from '../../../utils/helpers'
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
     { field: "id_product", headerName: "ID do Produto", flex: 1 },
-    { field: "ong_name", headerName: "Nome da ONG", flex: 1 },
+    // { field: "ong_name", headerName: "Nome da ONG", flex: 1 },
+    { field: "id_ong", headerName: "ID da ONG", flex: 1 },
     { field: "situation", headerName: "Situação", flex: 1 },
     { field: "created_date", headerName: "Data da Operação", flex: 1 },
 ]
@@ -30,15 +31,15 @@ function Donations() {
         return response.data
     }
 
-    const getOngById = async (id) => {
-        const response = await api.get(`/ongs/${id}`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
+    // const getOngById = async (id) => {
+    //     const response = await api.get(`/ongs/${id}`, {
+    //         headers: {
+    //             "Authorization": "Bearer " + token
+    //         }
+    //     })
 
-        return response.data
-    }
+    //     return response.data
+    // }
 
     const getDonationsQuery = useQuery("donations", {
         queryFn: () => getAllDonations(),
@@ -46,29 +47,30 @@ function Donations() {
     })
 
 
-    const modifiedDonatiosQueries = useQueries(
-        getDonationsQuery.data?.map(donation => {
-            return {
-                queryKey: ['ongs', donation.id_ong],
-                queryFn: async () => {
-                    const result = await getOngById(donation.id_ong)
+    // const modifiedDonatiosQueries = useQueries(
+    //     getDonationsQuery.data?.map(donation => {
+    //         return {
+    //             queryKey: ['ongs', donation.id_ong],
+    //             queryFn: async () => {
+    //                 const result = await getOngById(donation.id_ong)
 
-                    donation.created_date = convertDatetimeType(donation.created_date)
+    //                 donation.created_date = convertDatetimeType(donation.created_date)
 
-                    return { ...donation, "ong_name": result.name }
-                },
-                // refetchOnWindowFocus: false
-            }
-        }) ?? []
-    )
+    //                 return { ...donation, "ong_name": result.name }
+    //             },
+    //             // refetchOnWindowFocus: false
+    //         }
+    //     }) ?? []
+    // )
 
-    const modifiedDonationsIsLoading = modifiedDonatiosQueries.some(result => result.isLoading)
+    // const modifiedDonationsIsLoading = modifiedDonatiosQueries.some(result => result.isLoading)
 
     return (
         <style.Container>
             <h1>Doações</h1>
             <DataGrid
-                rows={!modifiedDonationsIsLoading ? modifiedDonatiosQueries.map(item => item.data) : []}
+                // rows={!modifiedDonationsIsLoading ? modifiedDonatiosQueries.map(item => item.data) : []}
+                rows={getDonationsQuery.data || []}
                 columns={muiTableColumns}
                 checkboxSelection
                 sx={muiCustomDataTableStyle}
@@ -76,7 +78,8 @@ function Donations() {
                     toolbar: MUICustomToolBar,
                     loadingOverlay: CircularLoader
                 }}
-                loading={modifiedDonationsIsLoading || getDonationsQuery.isLoading}
+                // loading={modifiedDonationsIsLoading || getDonationsQuery.isLoading}
+                loading={getDonationsQuery.isLoading}
                 slotProps={{
                     toolbar: { hasAddNewProductButton: false }
                 }}
