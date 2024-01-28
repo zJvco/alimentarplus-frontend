@@ -28,7 +28,6 @@ const ProductInfoSection = styled.div`
 
 const ProductInfoContainer = styled.div`
     display: flex;
-    flex-wrap: wrap;
     margin: 20px 0;
 `
 
@@ -43,7 +42,6 @@ const ProductImage = styled.img`
 const ProductSideInfoContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    max-width: 600px;
 `
 
 const ProductInfoContentBox = styled.div`
@@ -71,6 +69,25 @@ const ProductLocalizationContentContainer = styled.div`
 
 const AddressInfoText = styled.span`
 
+`
+
+const LocalizationMapLink = styled.a`
+
+`
+
+const LocalizationMapImage = styled.img`
+    width: 100%;
+`
+
+const LocalizationLinkHowToGetThere = styled.a`
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        text-decoration: none;
+    }
 `
 
 // Popup
@@ -131,5 +148,8 @@ export default {
     PopupContainer,
     PopupTitle,
     PopupText,
-    PopupActions
+    PopupActions,
+    LocalizationMapLink,
+    LocalizationMapImage,
+    LocalizationLinkHowToGetThere
 }
