@@ -60,9 +60,10 @@ const ProductRow = styled.li`
     justify-content: start;
     margin-right: 20px;
     border-radius: 10px;
+    border: 1px solid ${props => props.theme.colors.lightHover};
 
     &:hover {
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
 `
 
@@ -80,7 +81,8 @@ const ProductImage = styled.img`
     width: 200px;
     height: 160px;
     object-fit: cover;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 `
 
 const ProductInformations = styled.div`

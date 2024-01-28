@@ -46,7 +46,7 @@ function Products() {
                                 <style.ProductsContainer>
                                     <style.ProductsList>
                                         { supermarket?.products?.map((product, index) => {
-                                            if (index >= 5) {
+                                            if (index >= 5 && product.is_active === false) {
                                                 return
                                             }
 

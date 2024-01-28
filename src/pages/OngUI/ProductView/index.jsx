@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import style from './styles'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from 'react-query'
@@ -9,6 +9,7 @@ import Button from '../../../components/Form/Button'
 import { useState } from 'react'
 import { notify } from '../../../utils/notify'
 import { convertDateType } from '../../../utils/helpers'
+import { FaUpRightFromSquare } from 'react-icons/fa6'
 
 function ProductView() {
     const { id: productId } = useParams()
@@ -17,7 +18,7 @@ function ProductView() {
     const { user, token } = useAuth()
 
     const [isOpenedPopup, setIsOpenedPopup] = useState(false)
-
+    
     const getProductById = async (id) => {
         const response = await api.get(`/products/${id}`, {
             headers: {
@@ -95,6 +96,12 @@ function ProductView() {
         return <CircularLoader />
     }
 
+    let formattedAddressOutput;
+
+    if (!getSupermarketByIdQuery.isLoading) {
+        formattedAddressOutput = `${getSupermarketByIdQuery?.data?.address?.street} ${getSupermarketByIdQuery?.data?.address?.number}, ${getSupermarketByIdQuery?.data?.address?.city}, ${getSupermarketByIdQuery?.data?.address?.state} ${getSupermarketByIdQuery?.data?.address?.zip_code}`
+    }
+
     return (
         <>
             <style.Container>
@@ -147,9 +154,17 @@ function ProductView() {
 
                     <style.ProductLocalizationContentContainer>
                         <style.AddressInfoText>
-                            {getSupermarketByIdQuery?.data?.address?.street}, {getSupermarketByIdQuery?.data?.address?.number} - {getSupermarketByIdQuery?.data?.address?.zip_code} - {getSupermarketByIdQuery?.data?.address?.city} - {getSupermarketByIdQuery?.data?.address?.state}
+                            {formattedAddressOutput}
                         </style.AddressInfoText>
+                        <style.LocalizationLinkHowToGetThere>Como chegar <FaUpRightFromSquare style={{ marginLeft: "5px" }}/></style.LocalizationLinkHowToGetThere>
                     </style.ProductLocalizationContentContainer>
+
+                    <style.LocalizationMapLink href={`https://www.bing.com/maps?where=${formattedAddressOutput}`} target='_blank'>
+                        <style.LocalizationMapImage
+                            src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/CanvasLight/${formattedAddressOutput}?key=ArbjGjQ0DPeLGgBLKfX-7xF3JiSvvR7B5qgM5_d3tdj8l7bgd0r0Vfbp6dZNehNN&mapSize=1920,350`}
+                            alt={`Mapa de ${formattedAddressOutput}`}
+                        />
+                    </style.LocalizationMapLink>
                 </style.ProductLocalizationSection>
 
                 <Button type="button" onClick={handleContinueButton}>Quero doar esse alimento</Button>
