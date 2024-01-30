@@ -156,7 +156,7 @@ function ProductView() {
                         <style.AddressInfoText>
                             {formattedAddressOutput}
                         </style.AddressInfoText>
-                        <style.LocalizationLinkHowToGetThere>Como chegar <FaUpRightFromSquare style={{ marginLeft: "5px" }}/></style.LocalizationLinkHowToGetThere>
+                        <style.LocalizationLinkHowToGetThere href={`https://www.bing.com/maps?where=${formattedAddressOutput}`} target='_blank'>Como chegar <FaUpRightFromSquare style={{ marginLeft: "5px" }}/></style.LocalizationLinkHowToGetThere>
                     </style.ProductLocalizationContentContainer>
 
                     <style.LocalizationMapLink href={`https://www.bing.com/maps?where=${formattedAddressOutput}`} target='_blank'>

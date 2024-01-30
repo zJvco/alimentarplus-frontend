@@ -10,7 +10,7 @@ const Container = styled.nav`
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #FCFCFC;
+    background-color: #FFFFFF;
     border-right: 1px solid ${props => props.theme.colors.borderColor};
     transition: all ${transitionTime}s ease-in-out;
     z-index: 1000;
