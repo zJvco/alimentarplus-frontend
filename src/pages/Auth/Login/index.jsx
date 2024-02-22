@@ -7,6 +7,7 @@ import Banner from "../../../assets/kid eating.png"
 import useAuth from "../../../hooks/useAuth"
 import UseRedirect from "../../../hooks/useRedirect"
 import { loginValidations } from "../../../utils/validations"
+import LogoImage from "../../../assets/alimentarplus_logo_principal.png"
 
 function Login() {
     UseRedirect()
@@ -33,7 +34,9 @@ function Login() {
     return (
         <Container>
             <Section style={{padding: "40px"}}>
-                <Header>Alimentar+</Header>
+                <Header>
+                    <Logo src={LogoImage} />
+                </Header>
                 <FormContainer onSubmit={handleSubmit}>
                     <Title>Acesse sua conta</Title>
                     <InputField type="text" label="E-mail" onChange={(e) => setEmail(e.target.value)} error={inputErrors.email && inputErrors.email} />
@@ -66,6 +69,10 @@ const Section = styled.section`
 
 const Header = styled.header`
 
+`
+
+const Logo = styled.img`
+    width: 140px;
 `
 
 const FormContainer = styled.form`

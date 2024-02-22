@@ -20,7 +20,13 @@ const Container = styled.nav`
     }
 `
 
-const Logo = styled.div`
+const Logo = styled.img`
+    margin: 20px;
+    width: 120px;
+`
+
+const LogoIcon = styled.img`
+    width: 40px;
     margin: 20px;
 `
 
@@ -83,4 +89,5 @@ export default {
     Link,
     LinkTitle,
     LinkTitleHelper,
+    LogoIcon
 }

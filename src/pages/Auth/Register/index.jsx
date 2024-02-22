@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { setLocalStorageData } from '../../../utils/helpers'
 import UseRedirect from '../../../hooks/useRedirect'
 import { supermarketRegistrationValidations } from '../../../utils/validations'
+import LogoImage from "../../../assets/alimentarplus_logo_branco.png"
 
 function Register() {
   const navigate = useNavigate()
@@ -51,12 +52,12 @@ function Register() {
   return (
     <BackgroundColor>
       <Header>
-        <Logo>Alimentar+</Logo>
+        <Logo src={LogoImage} />
       </Header>
 
       <Container>
         <Title>Faça o cadastro</Title>
-        <Subtitle>Informações do responsável do supermercado ou da ONG.</Subtitle>
+        <Subtitle>Informações do responsável do mercado ou da ONG.</Subtitle>
 
         <FormContainer onSubmit={handleCadastroSubmit}>
           <InputField

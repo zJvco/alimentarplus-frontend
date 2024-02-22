@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import theme from './theme'
 import Login from './pages/Auth/Login/index.jsx';
 import Cadastro from './pages/Auth/Register/index.jsx';
-import SupermarketAddress from './pages/Auth/Register/Supermarket/Address'
-import SupermarketPlan from './pages/Auth/Register/Supermarket/Plan'
-import SupermarketInformation from './pages/Auth/Register/Supermarket/Information'
-import SupermarketConfirm from './pages/Auth/Register/Supermarket/Confirm';
+import MarketAddress from './pages/Auth/Register/Market/Address'
+import MarketPlan from './pages/Auth/Register/Market/Plan'
+import MarketInformation from './pages/Auth/Register/Market/Information'
+import MarketConfirm from './pages/Auth/Register/Market/Confirm';
 import OngAddress from './pages/Auth/Register/Ong/Address'
 import OngInformation from './pages/Auth/Register/Ong/Information'
 import OngConfirm from './pages/Auth/Register/Ong/Confirm';
@@ -20,17 +20,17 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { API_URL } from './api/config.js';
 
 // Supermercado
-import SMDashboard from './pages/SupermarketUI/Dashboard/index.jsx'
-import SMProducts from './pages/SupermarketUI/Products/index.jsx';
-import SMProductView from './pages/SupermarketUI/ProductView/index.jsx';
-import SMDonations from './pages/SupermarketUI/Donations/index.jsx';
+import MarketDashboard from './pages/SupermarketUI/Dashboard/index.jsx'
+import MarketProducts from './pages/SupermarketUI/Products/index.jsx';
+import MarketProductView from './pages/SupermarketUI/ProductView/index.jsx';
+import MarketDonations from './pages/SupermarketUI/Donations/index.jsx';
+import MarketPlans from './pages/SupermarketUI/Plans/index.jsx';
 
 // Ong
 import ONGDashboard from './pages/OngUI/Dashboard/index.jsx'
 import ONGDonations from './pages/OngUI/Donations/index.jsx';
 import ONGFoods from './pages/OngUI/Foods/index.jsx';
 import ONGFoodView from './pages/OngUI/FoodView/index.jsx';
-import Plans from './pages/SupermarketUI/Plans/index.jsx';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -93,10 +93,10 @@ function App() {
                 <Route index element={<Cadastro />} />
                 
                 <Route path='supermercado'>
-                  <Route path='informacoes' element={<SupermarketInformation />} />
-                  <Route path='endereco' element={<SupermarketAddress />} />
-                  <Route path='planos' element={<SupermarketPlan />} />
-                  <Route path='confirmar' element={<SupermarketConfirm />} />
+                  <Route path='informacoes' element={<MarketInformation />} />
+                  <Route path='endereco' element={<MarketAddress />} />
+                  <Route path='planos' element={<MarketPlan />} />
+                  <Route path='confirmar' element={<MarketConfirm />} />
                 </Route>
 
                 <Route path='ong'>
@@ -113,16 +113,16 @@ function App() {
                   path='/estabelecimento'
                   element={<PrivateRouteSupermarket />}
                 >
-                  <Route path='dashboard' element={<SMDashboard />} />
+                  <Route path='dashboard' element={<MarketDashboard />} />
 
                   <Route path='produtos'>
-                    <Route index element={<SMProducts/>} />
-                    <Route path=':id' element={<SMProductView />} />
+                    <Route index element={<MarketProducts/>} />
+                    <Route path=':id' element={<MarketProductView />} />
                   </Route>
 
-                  <Route path='doacoes' element={<SMDonations />} />
+                  <Route path='doacoes' element={<MarketDonations />} />
 
-                  <Route path='planos' element={<Plans />} />
+                  <Route path='planos' element={<MarketPlans />} />
                 </Route>
 
                 <Route

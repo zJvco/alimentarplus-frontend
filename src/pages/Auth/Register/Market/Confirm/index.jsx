@@ -6,11 +6,10 @@ import { FaPenToSquare } from 'react-icons/fa6'
 import Button from '../../../../../components/Form/Button'
 import { getLocalStorageData, getFormatedRegisterDataJSONResponse } from '../../../../../utils/helpers'
 import { useMutation } from 'react-query'
-import { useEffect } from 'react'
 import api from '../../../../../api/config'
 import { notify } from '../../../../../utils/notify'
 import { useNavigate } from 'react-router-dom'
-import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 const mockedTitleData = ["Dados do Responsável", "Dados do Estabelecimento", "Endereço do Estabelecimento", "Plano Selecionado"]
 
@@ -36,7 +35,7 @@ function Confirm() {
   return (
     <BackgroundColor>
       <Header>
-        <Logo>Alimentar+</Logo>
+        <Logo src={LogoImage} />
       </Header>
 
       <ProgressBarContainer>
@@ -108,6 +107,7 @@ const EditButton = styled.button`
   display: inline-block;
   vertical-align: middle;
   color: ${props => props.theme.colors.primary};
+  background-color: transparent;
 `
 
 export default Confirm

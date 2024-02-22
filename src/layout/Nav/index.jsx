@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import style from './styles'
 import { FaHouse, FaBoxOpen, FaSquarePollVertical, FaClipboardCheck, FaStore, FaChartArea, FaChartColumn, FaBowlFood } from 'react-icons/fa6'
 import useAuth from '../../hooks/useAuth'
+import Logo from "../../assets/alimentarplus_logo_principal.png"
+import LogoIcon from "../../assets/alimentarplus_logo_icone.png"
 
 function Nav() {
   const { userType } = useAuth()
@@ -22,7 +24,7 @@ function Nav() {
       onMouseLeave={handleOnMouseLeave}
       className={isMenuOpen ? "open" : ""}
     >
-      <style.Logo>A+</style.Logo>
+      <style.LogoIcon src={LogoIcon} />
       <style.Links>
         { userType === "supermarket" ? (
           <>
