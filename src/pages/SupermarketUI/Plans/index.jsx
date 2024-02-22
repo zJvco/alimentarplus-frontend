@@ -3,61 +3,28 @@ import style from './styles'
 import useAuth from '../../../hooks/useAuth'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import api from '../../../api/config'
-import CircularLoader from '../../../components/CircularLoader'
-import Button from '../../../components/Form/Button'
+import CircularLoader from '../../../components/CircularLoader.jsx'
+import Button from '../../../components/Form/Button.jsx'
 import { FaCheck } from 'react-icons/fa6'
 import { changeFirstLetterToUpperCase } from '../../../utils/helpers'
 import { notify } from '../../../utils/notify'
+import { getSupermarketById, getAllPlans, updateMarketPlan } from '../../../api/functions.js'
 
 function Plans() {
     const { user, token } = useAuth()
 
     const queryClient = useQueryClient()
 
-    const getSupermarketById = async (id) => {
-        const response = await api.get(`/supermarkets/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
-    const getAllPlans = async () => {
-        const response = await api.get(`/plans/`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
-    const updateSupermarketPlan = async (supermarketId, planId) => {
-        const data = {
-            "id": planId
-        }
-
-        const response = await api.post(`/supermarkets/${supermarketId}/update-plan`, JSON.stringify(data), {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
     const getSupermarketByIdQuery = useQuery(["supermarkets", user.id_supermarket], {
-        queryFn: () => getSupermarketById(user.id_supermarket)
+        queryFn: () => getSupermarketById(user.id_supermarket, token)
     })
 
     const getAllPlansQuery = useQuery("plans", {
-        queryFn: () => getAllPlans()
+        queryFn: () => getAllPlans(token)
     })
 
     const updateSupermarketPlanMutation = useMutation({
-        mutationFn: (data) => updateSupermarketPlan(data.supermarket_id, data.plan_id),
+        mutationFn: (data) => updateMarketPlan(data.supermarket_id, data.plan_id, token),
         onSuccess: (data) => {
             queryClient.invalidateQueries("plans")
             queryClient.invalidateQueries("supermarkets")

@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
-import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './components/PrivateRoute/index.jsx';
+import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './components/PrivateRoute.jsx';
 import MainLayout from './Layout.jsx';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { API_URL } from './api/config.js';
@@ -28,8 +28,8 @@ import SMDonations from './pages/SupermarketUI/Donations/index.jsx';
 // Ong
 import ONGDashboard from './pages/OngUI/Dashboard/index.jsx'
 import ONGDonations from './pages/OngUI/Donations/index.jsx';
-import ONGProducts from './pages/OngUI/Products/index.jsx';
-import ONGProductView from './pages/OngUI/ProductView/index.jsx';
+import ONGFoods from './pages/OngUI/Foods/index.jsx';
+import ONGFoodView from './pages/OngUI/FoodView/index.jsx';
 import Plans from './pages/SupermarketUI/Plans/index.jsx';
 
 const GlobalStyle = createGlobalStyle`
@@ -140,7 +140,7 @@ function App() {
                   </Route>
 
                   <Route path='estabelecimentos'>
-                    <Route index element={<ONGProducts />} />
+                    <Route index element={<ONGFoods />} />
 
                     <Route
                       path=':name'
@@ -149,7 +149,7 @@ function App() {
                       <Route
                         path='produtos'
                       >
-                        <Route path=':id' element={<ONGProductView />} />
+                        <Route path=':id' element={<ONGFoodView />} />
                       </Route>
                     </Route>
                   </Route>

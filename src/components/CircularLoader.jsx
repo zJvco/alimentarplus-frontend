@@ -1,6 +1,6 @@
 import React from 'react'
 import { ClipLoader } from 'react-spinners'
-import theme from '../../theme'
+import theme from '../theme'
 import styled from 'styled-components'
 
 function CircularLoader({

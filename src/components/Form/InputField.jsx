@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import InputErrorMessage from '../InputErrorMessage'
+import InputErrorMessage from './InputErrorMessage'
 
 const InputField = React.forwardRef(({
   label,

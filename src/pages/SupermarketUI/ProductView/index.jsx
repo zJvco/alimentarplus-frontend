@@ -1,25 +1,24 @@
 import React, { useRef } from 'react'
 import style from './styles'
-import InputField from '../../../components/Form/InputField'
-import InputGroup from '../../../components/Form/InputGroup'
+import InputField from '../../../components/Form/InputField.jsx'
+import InputGroup from '../../../components/Form/InputGroup.jsx'
 import { useParams, useNavigate } from 'react-router-dom'
-import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import CircularLoader from '../../../components/CircularLoader'
-import SwitchField from '../../../components/Form/SwitchField'
+import CircularLoader from '../../../components/CircularLoader.jsx'
+import SwitchField from '../../../components/Form/SwitchField.jsx'
 import { useState } from 'react'
-import TextField from '../../../components/Form/TextField'
-import Button from '../../../components/Form/Button'
-import AttachField from '../../../components/Form/AttachField'
+import TextField from '../../../components/Form/TextField.jsx'
+import Button from '../../../components/Form/Button.jsx'
 import { useEffect } from 'react'
 import { notify } from '../../../utils/notify'
 import { productValidations } from '../../../utils/validations'
-import ConfirmationPopup from '../../../components/ConfirmationPopup'
-import { formatDecimalNumber } from '../../../utils/helpers'
+import ConfirmationPopup from '../../../components/ConfirmationPopup.jsx'
+import { getMarketProductById, deleteMarketProductById, updateMarketProductById } from '../../../api/functions.js'
 
 function ProductView() {
   const navigate = useNavigate()
+
   const queryClient = useQueryClient()
 
   const { id: productId } = useParams()
@@ -43,38 +42,8 @@ function ProductView() {
 
   const { user, token } = useAuth()
 
-  const getProduct = async (id) => {
-    const response = await api.get(`/supermarkets/${user.id_supermarket}/products/${id}`, {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
-  const deleteProduct = async (id) => {
-    const response = await api.delete(`/supermarkets/${user.id_supermarket}/products/${id}`, {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
-  const updateProduct = async (id, data) => {
-    const response = await api.put(`/supermarkets/${user.id_supermarket}/products/${id}`, JSON.stringify(data), {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
   const { data: productData, isLoading } = useQuery(["products", productId], {
-    queryFn: () => getProduct(productId),
+    queryFn: () => getMarketProductById(user.id_supermarket, productId, token),
     onSuccess: (data) => {
       for (let key in updatedFormData) {
         setUpdatedFormData((prev) => ({ ...prev, [key]: data[key] }))
@@ -84,7 +53,8 @@ function ProductView() {
     refetchOnWindowFocus: false
   })
 
-  const deleteProductMutation = useMutation(deleteProduct, {
+  const deleteProductMutation = useMutation({
+    mutationFn: () => deleteMarketProductById(user.id_supermarket, productId, token),
     onSuccess: (data) => {
       queryClient.invalidateQueries("products")
 
@@ -93,9 +63,7 @@ function ProductView() {
   })
 
   const updateProductMutation = useMutation({
-    mutationFn: () => {
-      updateProduct(productId, updatedFormData)
-    },
+    mutationFn: () => updateMarketProductById(user.id_supermarket, productId, updatedFormData, token),
     onSuccess: (data) => {
       queryClient.invalidateQueries(["products", productId])
 

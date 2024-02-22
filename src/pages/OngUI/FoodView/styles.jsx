@@ -14,7 +14,7 @@ const HeaderInfoSection = styled.div`
 `
 
 const ProductNameText = styled.h2`
-
+    font-weight: normal;
 `
 
 const ProductIdText = styled.span`

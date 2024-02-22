@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '../Form/Button'
+import Button from './Form/Button'
 
 function ConfirmationPopup({
     title,

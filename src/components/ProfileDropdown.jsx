@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
-import Divisor from '../Divisor'
-import useAuth from '../../hooks/useAuth'
+import Divisor from './Divisor'
+import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 

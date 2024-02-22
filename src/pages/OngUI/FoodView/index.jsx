@@ -4,12 +4,13 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from 'react-query'
 import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
-import CircularLoader from '../../../components/CircularLoader'
-import Button from '../../../components/Form/Button'
+import CircularLoader from '../../../components/CircularLoader.jsx'
+import Button from '../../../components/Form/Button.jsx'
 import { useState } from 'react'
 import { notify } from '../../../utils/notify'
 import { convertDateType } from '../../../utils/helpers'
 import { FaUpRightFromSquare } from 'react-icons/fa6'
+import { getSupermarketById, getProductById } from '../../../api/functions.js'
 
 function ProductView() {
     const { id: productId } = useParams()
@@ -19,32 +20,13 @@ function ProductView() {
 
     const [isOpenedPopup, setIsOpenedPopup] = useState(false)
     
-    const getProductById = async (id) => {
-        const response = await api.get(`/products/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
-    const getSupermarketById = async (id) => {
-        const response = await api.get(`/supermarkets/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
 
     const getProductByIdQuery = useQuery(["products", productId], {
-        queryFn: () => getProductById(productId)
+        queryFn: () => getProductById(productId, token)
     })
 
     const getSupermarketByIdQuery = useQuery(["supermarkets", getProductByIdQuery?.data?.id_supermarket], {
-        queryFn: () => getSupermarketById(getProductByIdQuery.data.id_supermarket),
+        queryFn: () => getSupermarketById(getProductByIdQuery.data.id_supermarket, token),
         enabled: !getProductByIdQuery.isLoading && !!getProductByIdQuery.data
     })
 
@@ -156,7 +138,7 @@ function ProductView() {
                         <style.AddressInfoText>
                             {formattedAddressOutput}
                         </style.AddressInfoText>
-                        <style.LocalizationLinkHowToGetThere>Como chegar <FaUpRightFromSquare style={{ marginLeft: "5px" }}/></style.LocalizationLinkHowToGetThere>
+                        <style.LocalizationLinkHowToGetThere href={`https://www.bing.com/maps?where=${formattedAddressOutput}`} target='_blank'>Como chegar <FaUpRightFromSquare style={{ marginLeft: "5px" }}/></style.LocalizationLinkHowToGetThere>
                     </style.ProductLocalizationContentContainer>
 
                     <style.LocalizationMapLink href={`https://www.bing.com/maps?where=${formattedAddressOutput}`} target='_blank'>
@@ -167,7 +149,7 @@ function ProductView() {
                     </style.LocalizationMapLink>
                 </style.ProductLocalizationSection>
 
-                <Button type="button" onClick={handleContinueButton}>Quero doar esse alimento</Button>
+                <Button type="button" onClick={handleContinueButton}>Continuar</Button>
             </style.Container>
 
             { isOpenedPopup && (

@@ -32,6 +32,8 @@ const RightContainer = styled.div`
 
 const ContentContainer = styled.div`
   padding: 20px;
+  /* min-height: calc(100vh - 73px);
+  background-color: #FCFCFC; */
 `
 
 export default MainLayout

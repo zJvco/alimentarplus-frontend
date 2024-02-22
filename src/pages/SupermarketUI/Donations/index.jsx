@@ -6,8 +6,9 @@ import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
-import CircularLoader from '../../../components/CircularLoader'
+import CircularLoader from '../../../components/CircularLoader.jsx'
 import { convertDatetimeType } from '../../../utils/helpers'
+import { getMarketDonations } from '../../../api/functions.js'
 
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
@@ -21,55 +22,15 @@ const muiTableColumns = [
 function Donations() {
     const { user, token } = useAuth()
 
-    const getAllDonations = async () => {
-        const response = await api.get(`supermarkets/${user.id_supermarket}/donations`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
-    // const getOngById = async (id) => {
-    //     const response = await api.get(`/ongs/${id}`, {
-    //         headers: {
-    //             "Authorization": "Bearer " + token
-    //         }
-    //     })
-
-    //     return response.data
-    // }
-
     const getDonationsQuery = useQuery("donations", {
-        queryFn: () => getAllDonations(),
+        queryFn: () => getMarketDonations(user.id_supermarket, token),
         retry: false
     })
-
-
-    // const modifiedDonatiosQueries = useQueries(
-    //     getDonationsQuery.data?.map(donation => {
-    //         return {
-    //             queryKey: ['ongs', donation.id_ong],
-    //             queryFn: async () => {
-    //                 const result = await getOngById(donation.id_ong)
-
-    //                 donation.created_date = convertDatetimeType(donation.created_date)
-
-    //                 return { ...donation, "ong_name": result.name }
-    //             },
-    //             // refetchOnWindowFocus: false
-    //         }
-    //     }) ?? []
-    // )
-
-    // const modifiedDonationsIsLoading = modifiedDonatiosQueries.some(result => result.isLoading)
 
     return (
         <style.Container>
             <h1>Doações</h1>
             <DataGrid
-                // rows={!modifiedDonationsIsLoading ? modifiedDonatiosQueries.map(item => item.data) : []}
                 rows={getDonationsQuery.data || []}
                 columns={muiTableColumns}
                 checkboxSelection
@@ -78,12 +39,10 @@ function Donations() {
                     toolbar: MUICustomToolBar,
                     loadingOverlay: CircularLoader
                 }}
-                // loading={modifiedDonationsIsLoading || getDonationsQuery.isLoading}
                 loading={getDonationsQuery.isLoading}
                 slotProps={{
                     toolbar: { hasAddNewProductButton: false }
                 }}
-                // onRowDoubleClick={(rowData) => navigate("/estabelecimento/produtos/" + rowData.id)}
                 disableRowSelectionOnClick
                 localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
                 autoHeight
