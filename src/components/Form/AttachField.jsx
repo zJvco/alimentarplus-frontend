@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { FaImage } from 'react-icons/fa6'
 import { useState } from 'react'
-import CloseButton from '../../CloseButton'
+import CloseButton from '../CloseButton.jsx'
 import { useEffect } from 'react'
-import InputErrorMessage from '../InputErrorMessage'
+import InputErrorMessage from './InputErrorMessage.jsx'
 
 function AttachField({
     id,

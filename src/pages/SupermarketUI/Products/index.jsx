@@ -4,10 +4,10 @@ import { useQuery } from 'react-query'
 import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
 import { DataGrid, ptBR } from '@mui/x-data-grid';
-import CircularLoader from '../../../components/CircularLoader'
+import CircularLoader from '../../../components/CircularLoader.jsx'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
-import CreateNewProductPopup from '../../../components/CreateNewProductPopup'
+import CreateNewProductPopup from '../../../components/CreateNewProductPopup.jsx'
 import { useNavigate } from 'react-router-dom'
 import { convertDateType } from '../../../utils/helpers'
 

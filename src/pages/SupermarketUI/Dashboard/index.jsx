@@ -3,36 +3,10 @@ import styled from 'styled-components'
 import { FaClipboardCheck, FaBoxOpen, FaBolt, FaScaleBalanced } from 'react-icons/fa6'
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer, CartesianGrid } from 'recharts'
 import { useQuery } from 'react-query'
-import CircularLoader from '../../../components/CircularLoader'
+import CircularLoader from '../../../components/CircularLoader.jsx'
 import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
-
-const data = [
-  {
-    day: 1,
-    qd: 1000
-  },
-  {
-    day: 2,
-    qd: 300,
-  },
-  {
-    day: 3,
-    qd: 700,
-  },
-  {
-    day: 4,
-    qd: 1300,
-  },
-  {
-    day: 5,
-    qd: 500,
-  },
-  {
-    day: 6,
-    qd: 20,
-  }
-]
+import CustomToolTip from '../../../components/Charts/CustomToolTip.jsx'
 
 function Dashboard() {
   const { user, token } = useAuth()
@@ -175,7 +149,7 @@ function Dashboard() {
           )}
         </MetricCard>
 
-        <MetricCard style={{ borderLeft: "4px solid #FFDE59" }}>
+        {/* <MetricCard style={{ borderLeft: "4px solid #FFDE59" }}>
           <MetricTitle>
             Qtd. Peso Doados/Mês
             <span style={{ backgroundColor: "#FFDE59" }} >
@@ -183,7 +157,7 @@ function Dashboard() {
             </span>
           </MetricTitle>
           <MetricValue>1.942kg</MetricValue>
-        </MetricCard>
+        </MetricCard> */}
 
         <MetricCard style={{ borderLeft: "4px solid #A259FF" }}>
           { getProductsQuery.isLoading ? (
@@ -232,7 +206,7 @@ function Dashboard() {
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="day" />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={<CustomToolTip />} />
               <Bar dataKey="total" fill='#0097B2' />
             </BarChart>
           </ResponsiveContainer>

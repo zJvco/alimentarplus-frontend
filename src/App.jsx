@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
-import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './components/PrivateRoute/index.jsx';
+import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './components/PrivateRoute.jsx';
 import MainLayout from './Layout.jsx';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { API_URL } from './api/config.js';

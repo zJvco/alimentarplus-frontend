@@ -6,7 +6,7 @@ import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
-import CircularLoader from '../../../components/CircularLoader'
+import CircularLoader from '../../../components/CircularLoader.jsx'
 import { convertDatetimeType } from '../../../utils/helpers'
 
 const muiTableColumns = [

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import ProfileDropdown from '../ProfileDropdown'
+import ProfileDropdown from './ProfileDropdown'
 import { useState, useRef } from 'react'
 import { useEffect } from 'react'
 
