@@ -4,9 +4,9 @@ import { FaClipboardCheck, FaBoxOpen, FaBolt, FaScaleBalanced } from 'react-icon
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer, CartesianGrid } from 'recharts'
 import { useQuery } from 'react-query'
 import CircularLoader from '../../../components/CircularLoader.jsx'
-import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
 import CustomToolTip from '../../../components/Charts/CustomToolTip.jsx'
+import { getDonationsLast30Days, getMarketProducts, getMarketDonations } from '../../../api/functions.js'
 
 function Dashboard() {
   const { user, token } = useAuth()
@@ -16,40 +16,10 @@ function Dashboard() {
   const [inactiveProducts, setInactiveProducts] = useState(0)
   const [totalDonations, setTotalDonations] = useState(0)
 
-  const getDonationsLast30Days = async () => {
-    const response = await api.get(`supermarkets/${user.id_supermarket}/dashboard/donations-last-30-days`, {
-      headers: {
-          "Authorization": "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
-  const getProducts = async () => {
-    const response = await api.get(`supermarkets/${user.id_supermarket}/products`, {
-      headers: {
-          "Authorization": "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
-  const getDonations = async () => {
-    const response = await api.get(`supermarkets/${user.id_supermarket}/donations`, {
-      headers: {
-          "Authorization": "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
   const getDonationsLast30DaysQuery = useQuery({
     queryKey: ["donations-last-30-days"],
     queryFn: async () => {
-      const result = await getDonationsLast30Days()
+      const result = await getDonationsLast30Days(user.id_supermarket, token)
 
       const currentDate = new Date()
 
@@ -95,7 +65,7 @@ function Dashboard() {
   const getProductsQuery = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const result = await getProducts()
+      const result = await getMarketProducts(user.id_supermarket, token)
 
       setProductsSum(result.length)
 
@@ -120,7 +90,7 @@ function Dashboard() {
   const getDonationsQuery = useQuery({
     queryKey: ["donations"],
     queryFn: async () => {
-      const result = await getDonations()
+      const result = await getMarketDonations(user.id_supermarket, token)
 
       setTotalDonations(result.length)
 

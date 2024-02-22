@@ -10,6 +10,7 @@ import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import CreateNewProductPopup from '../../../components/CreateNewProductPopup.jsx'
 import { useNavigate } from 'react-router-dom'
 import { convertDateType } from '../../../utils/helpers'
+import { getMarketProducts } from '../../../api/functions.js'
 
 const muiTableColumns = [
   { field: "id", headerName: "ID", flex: 1 },
@@ -37,18 +38,8 @@ function Products() {
   
   const { user, token } = useAuth()
 
-  const getProducts = async () => {
-    const response = await api.get(`/supermarkets/${user.id_supermarket}/products`, {
-      headers: {
-        "Authorization": "Bearer " + token 
-      }
-    })
-
-    return response.data
-  }
-
   const { isLoading, data: productsData } = useQuery("products", {
-    queryFn: () => getProducts(),
+    queryFn: () => getMarketProducts(user.id_supermarket, token),
     retry: false
   })
 

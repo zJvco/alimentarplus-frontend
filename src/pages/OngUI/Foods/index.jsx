@@ -7,22 +7,13 @@ import CircularLoader from '../../../components/CircularLoader.jsx'
 import Button from '../../../components/Form/Button.jsx'
 import { FaEye } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
+import { getAllSupermarkets } from '../../../api/functions.js'
 
 function Products() {
     const { token } = useAuth()
 
-    const getAllSupermarkets = async () => {
-        const response = await api.get("/supermarkets", {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
     const getAllSupermarketsQuery = useQuery("supermarkets", {
-        queryFn: () => getAllSupermarkets()
+        queryFn: () => getAllSupermarkets(token)
     })
 
     return (

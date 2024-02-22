@@ -1,14 +1,12 @@
 import React from 'react'
 import style from './styles'
 import { useQuery, useQueries } from 'react-query'
-import api from '../../../api/config'
 import { muiCustomDataTableStyle } from '../../../components/Mui/customStyles'
 import MUICustomToolBar from '../../../components/Mui/CustomToolBar'
 import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
 import CircularLoader from '../../../components/CircularLoader.jsx'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { getAllOngDonations } from '../../../api/functions.js'
 
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
@@ -22,16 +20,6 @@ const muiTableColumns = [
 function Donations() {
     const { user, token } = useAuth()
 
-    const getAllDonations = async () => {
-        const response = await api.get(`/ongs/${user.id_ong}/donations`, {
-            headers: {
-                "Authorization": "Bearer " + token 
-            }
-        })
-
-        return response.data
-    }
-
     // const getSupermarketById = async (id) => {
     //     const response = await api.get(`/supermarkets/${id}`, {
     //         headers: {
@@ -43,7 +31,7 @@ function Donations() {
     // }
 
     const getDonationsQuery = useQuery("donations", {
-        queryFn: () => getAllDonations()
+        queryFn: () => getAllOngDonations(user.id_ong, token)
     })
 
     // const modifiedDonatiosQueries = useQueries(

@@ -8,6 +8,7 @@ import { DataGrid, ptBR } from '@mui/x-data-grid'
 import useAuth from '../../../hooks/useAuth'
 import CircularLoader from '../../../components/CircularLoader.jsx'
 import { convertDatetimeType } from '../../../utils/helpers'
+import { getMarketDonations } from '../../../api/functions.js'
 
 const muiTableColumns = [
     { field: "id", headerName: "ID da Doação", flex: 1 },
@@ -21,18 +22,8 @@ const muiTableColumns = [
 function Donations() {
     const { user, token } = useAuth()
 
-    const getAllDonations = async () => {
-        const response = await api.get(`supermarkets/${user.id_supermarket}/donations`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
     const getDonationsQuery = useQuery("donations", {
-        queryFn: () => getAllDonations(),
+        queryFn: () => getMarketDonations(user.id_supermarket, token),
         retry: false
     })
 

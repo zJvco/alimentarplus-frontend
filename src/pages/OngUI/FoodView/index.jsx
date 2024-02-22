@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { notify } from '../../../utils/notify'
 import { convertDateType } from '../../../utils/helpers'
 import { FaUpRightFromSquare } from 'react-icons/fa6'
+import { getSupermarketById, getProductById } from '../../../api/functions.js'
 
 function ProductView() {
     const { id: productId } = useParams()
@@ -19,32 +20,13 @@ function ProductView() {
 
     const [isOpenedPopup, setIsOpenedPopup] = useState(false)
     
-    const getProductById = async (id) => {
-        const response = await api.get(`/products/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
-
-    const getSupermarketById = async (id) => {
-        const response = await api.get(`/supermarkets/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-
-        return response.data
-    }
 
     const getProductByIdQuery = useQuery(["products", productId], {
-        queryFn: () => getProductById(productId)
+        queryFn: () => getProductById(productId, token)
     })
 
     const getSupermarketByIdQuery = useQuery(["supermarkets", getProductByIdQuery?.data?.id_supermarket], {
-        queryFn: () => getSupermarketById(getProductByIdQuery.data.id_supermarket),
+        queryFn: () => getSupermarketById(getProductByIdQuery.data.id_supermarket, token),
         enabled: !getProductByIdQuery.isLoading && !!getProductByIdQuery.data
     })
 

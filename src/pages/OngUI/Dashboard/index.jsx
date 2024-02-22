@@ -4,9 +4,9 @@ import { FaClipboardCheck, FaBoxOpen, FaBolt, FaScaleBalanced } from 'react-icon
 import { PieChart, ResponsiveContainer, Pie, Cell, Tooltip, Legend } from 'recharts'
 import { useQuery } from 'react-query'
 import CircularLoader from '../../../components/CircularLoader.jsx'
-import api from '../../../api/config'
 import useAuth from '../../../hooks/useAuth'
 import CustomToolTip from '../../../components/Charts/CustomToolTip.jsx'
+import { getAllOngDonations } from '../../../api/functions.js'
 
 function Dashboard() {
   const { user, token } = useAuth()
@@ -14,20 +14,10 @@ function Dashboard() {
   const [totalDonations, setTotalDonations] = useState(0)
   const [totalGroupedDonationsByStatus, setTotalGroupedDonationsByStatus] = useState([])
 
-  const getDonations = async () => {
-    const response = await api.get(`ongs/${user.id_ong}/donations`, {
-      headers: {
-          "Authorization": "Bearer " + token
-      }
-    })
-
-    return response.data
-  }
-
   const getDonationsQuery = useQuery({
     queryKey: ["donations"],
     queryFn: async () => {
-      const result = await getDonations()
+      const result = await getAllOngDonations(user.id_ong, token)
 
       setTotalDonations(result.length)
       setTotalGroupedDonationsByStatus(result.reduce((acc, cur) => {
