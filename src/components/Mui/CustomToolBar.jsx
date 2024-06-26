@@ -1,6 +1,6 @@
 import React from 'react'
 import { GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from '@mui/x-data-grid'
-import Button from '../../Form/Button'
+import Button from '../Form/Button'
 import { FaPlus } from 'react-icons/fa6'
 
 function MUICustomToolBar(props) {

@@ -18,6 +18,7 @@ import { PrivateRoute, PrivateRouteOng, PrivateRouteSupermarket } from './compon
 import MainLayout from './Layout.jsx';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { API_URL } from './api/config.js';
+import { createTheme as MuiCreateTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 
 // Supermercado
 import MarketDashboard from './pages/SupermarketUI/Dashboard/index.jsx'
@@ -59,6 +60,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
+const MuiTheme = MuiCreateTheme({
+  palette: {
+    primary: {
+      main: theme.colors.primary,
+      light: theme.colors.primary,
+      dark: theme.colors.primary
+    }
+  },
+  
+})
+
 const queryClient = new QueryClient()
 
 function App() {
@@ -82,82 +94,86 @@ function App() {
 
         <AuthProvider>
 
-          <ToastContainer />
+          <MuiThemeProvider theme={MuiTheme}>
 
-          <Router>
-            {/* Rotas de Autenticação */}
-            <Routes>
-              <Route path='/login' element={<Login />} />
+            <ToastContainer />
 
-              <Route path='/cadastro'>
-                <Route index element={<Cadastro />} />
-                
-                <Route path='supermercado'>
-                  <Route path='informacoes' element={<MarketInformation />} />
-                  <Route path='endereco' element={<MarketAddress />} />
-                  <Route path='planos' element={<MarketPlan />} />
-                  <Route path='confirmar' element={<MarketConfirm />} />
-                </Route>
+            <Router>
+              {/* Rotas de Autenticação */}
+              <Routes>
+                <Route path='/login' element={<Login />} />
 
-                <Route path='ong'>
-                  <Route path='informacoes' element={<OngInformation />} />
-                  <Route path='endereco' element={<OngAddress />} />
-                  <Route path='confirmar' element={<OngConfirm />} />
-                </Route>
-              </Route>
-
-              <Route
-                element={<PrivateRoute><MainLayout /></PrivateRoute>}
-              >
-                <Route 
-                  path='/estabelecimento'
-                  element={<PrivateRouteSupermarket />}
-                >
-                  <Route path='dashboard' element={<MarketDashboard />} />
-
-                  <Route path='produtos'>
-                    <Route index element={<MarketProducts/>} />
-                    <Route path=':id' element={<MarketProductView />} />
+                <Route path='/cadastro'>
+                  <Route index element={<Cadastro />} />
+                  
+                  <Route path='supermercado'>
+                    <Route path='informacoes' element={<MarketInformation />} />
+                    <Route path='endereco' element={<MarketAddress />} />
+                    <Route path='planos' element={<MarketPlan />} />
+                    <Route path='confirmar' element={<MarketConfirm />} />
                   </Route>
 
-                  <Route path='doacoes' element={<MarketDonations />} />
-
-                  <Route path='planos' element={<MarketPlans />} />
+                  <Route path='ong'>
+                    <Route path='informacoes' element={<OngInformation />} />
+                    <Route path='endereco' element={<OngAddress />} />
+                    <Route path='confirmar' element={<OngConfirm />} />
+                  </Route>
                 </Route>
 
                 <Route
-                  path='/ong'
-                  element={<PrivateRouteOng />}
+                  element={<PrivateRoute><MainLayout /></PrivateRoute>}
                 >
-                  <Route path='dashboard' element={<ONGDashboard />} />
-
-                  <Route path='doacoes' element={<ONGDonations />} />
-
-                  <Route
-                  
+                  <Route 
+                    path='/estabelecimento'
+                    element={<PrivateRouteSupermarket />}
                   >
+                    <Route path='dashboard' element={<MarketDashboard />} />
 
+                    <Route path='produtos'>
+                      <Route index element={<MarketProducts/>} />
+                      <Route path=':id' element={<MarketProductView />} />
+                    </Route>
+
+                    <Route path='doacoes' element={<MarketDonations />} />
+
+                    <Route path='planos' element={<MarketPlans />} />
                   </Route>
 
-                  <Route path='estabelecimentos'>
-                    <Route index element={<ONGFoods />} />
+                  <Route
+                    path='/ong'
+                    element={<PrivateRouteOng />}
+                  >
+                    <Route path='dashboard' element={<ONGDashboard />} />
+
+                    <Route path='doacoes' element={<ONGDonations />} />
 
                     <Route
-                      path=':name'
+                    
                     >
-                      <Route index />
+
+                    </Route>
+
+                    <Route path='estabelecimentos'>
+                      <Route index element={<ONGFoods />} />
+
                       <Route
-                        path='produtos'
+                        path=':name'
                       >
-                        <Route path=':id' element={<ONGFoodView />} />
+                        <Route index />
+                        <Route
+                          path='produtos'
+                        >
+                          <Route path=':id' element={<ONGFoodView />} />
+                        </Route>
                       </Route>
                     </Route>
                   </Route>
-                </Route>
 
-              </Route>
-            </Routes>
-          </Router>
+                </Route>
+              </Routes>
+            </Router>
+
+          </MuiThemeProvider>
 
         </AuthProvider>
 
