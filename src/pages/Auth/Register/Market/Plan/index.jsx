@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
 import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 function Plan() {
     const navigate = useNavigate()
@@ -28,7 +29,7 @@ function Plan() {
     return (
         <BackgroundColor>
             <Header>
-                <Logo>Alimentar+</Logo>
+                <Logo src={LogoImage} />
             </Header>
 
             <ProgressBarContainer>
@@ -37,7 +38,7 @@ function Plan() {
 
             <Container>
                 <Title>Planos</Title>
-                <Subtitle>Escolha um plano para o seu estabelecimento.</Subtitle>
+                <Subtitle>Escolha um plano para o seu mercado.</Subtitle>
 
                 <BoxesContainer>
                     <BoxContainer>

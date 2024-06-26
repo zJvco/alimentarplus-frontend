@@ -42,7 +42,7 @@ export const ProgressBarContainer = styled.div`
 
 export const ProgressBar = styled.div`
   border-radius: 3px;
-  background-color: ${props => props.theme.colors.black};;
+  background-color: #58D68D;
 `
 
 export const Footer = styled.footer`
@@ -64,6 +64,6 @@ export const Header = styled.header`
   padding: 20px;
 `
 
-export const Logo = styled.span`
-  
+export const Logo = styled.img`
+  width: 140px;
 `

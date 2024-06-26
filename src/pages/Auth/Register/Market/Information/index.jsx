@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
 import { useState } from 'react'
 import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 function Information() {
   const navigate = useNavigate()
@@ -25,7 +26,7 @@ function Information() {
   return (
     <BackgroundColor>
       <Header>
-        <Logo>Alimentar+</Logo>
+        <Logo src={LogoImage} />
       </Header>
 
       <ProgressBarContainer>
@@ -33,12 +34,12 @@ function Information() {
       </ProgressBarContainer>
       
       <Container>
-        <Title>Informações do estabelecimento</Title>
-        <Subtitle>Preencha as informações do seu estabelecimento.</Subtitle>
+        <Title>Informações do mercado</Title>
+        <Subtitle>Preencha as informações do seu mercado.</Subtitle>
 
         <FormContainer onSubmit={handleSubmit}>
           <InputField
-            label="Nome do estabelecimento (Nome Fantasia)"
+            label="Nome do mercado (Nome Fantasia)"
             placeholder="Como vai aparecer no app. Ex: Carrefour - Guarulhos"
             type="text"
             onChange={(e) => setData({...data, name: e.target.value})}

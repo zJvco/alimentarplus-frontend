@@ -10,7 +10,7 @@ import { useMutation } from 'react-query'
 import { notify } from '../../../../../utils/notify'
 import api from '../../../../../api/config'
 import { getFormatedRegisterDataJSONResponse } from '../../../../../utils/helpers'
-import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 const mockedTitleData = ["Dados do Responsável", "Dados da ONG", "Endereço da ONG"]
 
@@ -37,7 +37,7 @@ function Confirm() {
   return (
     <BackgroundColor>
       <Header>
-        <Logo>Alimentar+</Logo>
+        <Logo src={LogoImage} />
       </Header>
 
       <ProgressBarContainer>

@@ -19,15 +19,6 @@ export const muiCustomDataTableStyle = {
     '.css-wop1k0-MuiDataGrid-footerContainer': {
       border: "none"
     },
-    '&.Mui-selected': {
-        color: theme.colors.primary
-    },
-    '.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked': {
-        color: theme.colors.primary
-    },
-    '.css-1knaqv7-MuiButtonBase-root-MuiButton-root': {
-        color: theme.colors.primary
-    },
     '.css-c63i49-MuiInputBase-input-MuiInput-input': {
         border: "none"
     },

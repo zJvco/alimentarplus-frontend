@@ -7,7 +7,7 @@ import { BackgroundColor, Container, Title, ProgressBar, Subtitle, FormContainer
 import { useNavigate } from 'react-router-dom'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
 import { useState } from 'react'
-import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 function Information() {
   const navigate = useNavigate()
@@ -25,7 +25,7 @@ function Information() {
   return (
     <BackgroundColor>
       <Header>
-        <Logo>Alimentar+</Logo>
+        <Logo src={LogoImage} />
       </Header>
 
       <ProgressBarContainer>

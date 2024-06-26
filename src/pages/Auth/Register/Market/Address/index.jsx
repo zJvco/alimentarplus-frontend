@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { updateLocalStorageData } from '../../../../../utils/helpers'
 import UseRedirect from '../../../../../hooks/useRedirect'
+import LogoImage from "../../../../../assets/alimentarplus_logo_branco.png"
 
 function Address() {
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ function Address() {
     return (
         <BackgroundColor>
             <Header>
-                <Logo>Alimentar+</Logo>
+                <Logo src={LogoImage} />
             </Header>
 
             <ProgressBarContainer>
@@ -33,8 +34,8 @@ function Address() {
             </ProgressBarContainer>
 
             <Container>
-                <Title>Endereço do estabelecimento</Title>
-                <Subtitle>Preencha as informações de endereço do seu estabelecimento.</Subtitle>
+                <Title>Endereço do mercado</Title>
+                <Subtitle>Preencha as informações de endereço do seu mercado.</Subtitle>
 
                 <FormContainer onSubmit={handleSubmit}>
                     <InputGroup>
